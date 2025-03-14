@@ -1,0 +1,42 @@
+# Bodybuilding API File Paths
+
+## Core Files
+bodybuilding.json
+bodybuilding_serverless_api/serverless.yml
+bodybuilding_serverless_api/README.md
+bodybuilding_serverless_api/requirements.txt
+
+## API Handlers
+bodybuilding_serverless_api/src/handlers/plan_handler.py
+bodybuilding_serverless_api/src/handlers/chat_handler.py
+bodybuilding_serverless_api/src/handlers/user_handler.py
+bodybuilding_serverless_api/src/handlers/progress_handler.py
+
+## Core Services
+bodybuilding_serverless_api/src/services/plan_service.py
+bodybuilding_serverless_api/src/services/chat_service.py
+bodybuilding_serverless_api/src/services/progress_service.py
+bodybuilding_serverless_api/src/services/service_factory.py
+
+## Chat Components
+bodybuilding_serverless_api/src/services/chat/prompts
+bodybuilding_serverless_api/src/services/chat/generators
+bodybuilding_serverless_api/src/services/chat/orchestration
+
+## AWS Integration
+bodybuilding_serverless_api/src/aws/bedrockmanager.py
+bodybuilding_serverless_api/src/aws/dynamomanager.py
+bodybuilding_serverless_api/src/aws/s3manager.py
+bodybuilding_serverless_api/src/aws/emailmanager.py
+
+## Authentication
+bodybuilding_serverless_api/src/auth.py
+
+## Key Transformations
+lesson → plan
+mathtilda → bodybuildr
+lessonsTable → plansTable
+lessonVersionsTable → planVersionsTable
+pedagogicalContext → trainingContext
+standardsAddressed → fitnessGoals
+markupProblemSets → workoutRoutines 

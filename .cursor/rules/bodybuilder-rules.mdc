@@ -1,7 +1,7 @@
 ---
 description: rules-project
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 [bodybuilding.json](mdc:bodybuilding.json) is the object we will by dynamically render each section will be rendered independtly 
 [serverless.yml](mdc:serverless_api_lesson/serverless.yml)  is a lessonplanner project I want to template off
