@@ -5,16 +5,15 @@ import os
 from typing import Dict, Any
 
 try:
-    from utils.response_builder import ResponseBuilder
-    from utils.logger import Logger
-    from aws.dynamo_manager import DynamoManager
+    from utils.response_builder import build_response
+    from utils.loggers.applogger import AppLogger
+    from aws.dynamomanager import DynamoManager
 except ImportError:
-    from src.utils.response_builder import ResponseBuilder
-    from src.utils.logger import Logger
-    from src.aws.dynamo_manager import DynamoManager
+    from src.utils.response_builder import build_response
+    from src.utils.loggers.applogger import AppLogger
+    from src.aws.dynamomanager import DynamoManager
 
-LOGGER = Logger(__name__)
-RESPONSE_BUILDER = ResponseBuilder()
+LOGGER = AppLogger(__name__)
 DYNAMO_MANAGER = DynamoManager(LOGGER)
 
 def create_user(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
@@ -36,9 +35,9 @@ def create_user(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         available_days = body.get('availableDays')
         
         if not all([name, age, height, weight, fitness_level, fitness_goals, available_days]):
-            return RESPONSE_BUILDER.build_error_response(400, 
-                "Missing required fields. All user fields are required: name, age, height, weight, fitnessLevel, fitnessGoals, availableDays"
-            )
+            return build_response(400, {
+                "error": "Missing required fields. All user fields are required: name, age, height, weight, fitnessLevel, fitnessGoals, availableDays"
+            })
         
         user_item = {
             'userId': user_id,
@@ -57,15 +56,15 @@ def create_user(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             item=user_item
         )
         
-        return RESPONSE_BUILDER.build_success_response({
+        return build_response(200, {
             "message": "User profile created successfully",
             "user": user_item
         })
     except Exception as err:
         LOGGER.error("Error creating user profile: %s", str(err))
-        return RESPONSE_BUILDER.build_error_response(500, 
-            f"An error occurred while creating the user profile: {str(err)}"
-        )
+        return build_response(500, {
+            "error": f"An error occurred while creating the user profile: {str(err)}"
+        })
 
 def update_user(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """Lambda handler for updating an existing user profile"""
@@ -78,9 +77,9 @@ def update_user(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         
         # Ensure the user can only update their own profile
         if user_id != path_user_id:
-            return RESPONSE_BUILDER.build_error_response(403, 
-                "You can only update your own profile"
-            )
+            return build_response(403, {
+                "error": "You can only update your own profile"
+            })
         
         body = json.loads(event.get('body', '{}'))
         
@@ -100,9 +99,9 @@ def update_user(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         )
         
         if not existing_user:
-            return RESPONSE_BUILDER.build_error_response(404, 
-                f"User profile not found"
-            )
+            return build_response(404, {
+                "error": "User profile not found"
+            })
         
         # Update with new values or keep existing ones
         updated_user = {
@@ -122,15 +121,15 @@ def update_user(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             item=updated_user
         )
         
-        return RESPONSE_BUILDER.build_success_response({
+        return build_response(200, {
             "message": "User profile updated successfully",
             "user": updated_user
         })
     except Exception as err:
         LOGGER.error("Error updating user profile: %s", str(err))
-        return RESPONSE_BUILDER.build_error_response(500, 
-            f"An error occurred while updating the user profile: {str(err)}"
-        )
+        return build_response(500, {
+            "error": f"An error occurred while updating the user profile: {str(err)}"
+        })
 
 def get_user(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """Lambda handler for retrieving a user profile"""
@@ -143,9 +142,9 @@ def get_user(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         
         # Ensure the user can only view their own profile
         if user_id != path_user_id:
-            return RESPONSE_BUILDER.build_error_response(403, 
-                "You can only view your own profile"
-            )
+            return build_response(403, {
+                "error": "You can only view your own profile"
+            })
         
         # Get user profile
         user = DYNAMO_MANAGER.get_item(
@@ -154,15 +153,15 @@ def get_user(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         )
         
         if not user:
-            return RESPONSE_BUILDER.build_error_response(404, 
-                f"User profile not found"
-            )
+            return build_response(404, {
+                "error": "User profile not found"
+            })
         
-        return RESPONSE_BUILDER.build_success_response({
+        return build_response(200, {
             "user": user
         })
     except Exception as err:
         LOGGER.error("Error retrieving user profile: %s", str(err))
-        return RESPONSE_BUILDER.build_error_response(500, 
-            f"An error occurred while retrieving the user profile: {str(err)}"
-        ) 
+        return build_response(500, {
+            "error": f"An error occurred while retrieving the user profile: {str(err)}"
+        }) 
