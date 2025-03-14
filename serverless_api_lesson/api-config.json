@@ -1,0 +1,24 @@
+{
+	"cors": {
+	  "origins": ["*"],
+	  "headers": [
+		"Content-Type",
+		"X-Amz-Date",
+		"Authorization",
+		"X-Api-Key",
+		"X-Amz-Security-Token",
+		"X-Amz-User-Agent",
+		"x-requested-with"
+	  ],
+	  "allowCredentials": true,
+	  "maxAge": 900,
+	  "cacheControl": "max-age=600, s-maxage=600, proxy-revalidate"
+	},
+	"authorizer": {
+	  "name": "authorize",
+	  "resultTtlInSeconds": 0,
+	  "identitySource": "method.request.header.Authorization",
+	  "type": "token"
+	}
+  }
+  

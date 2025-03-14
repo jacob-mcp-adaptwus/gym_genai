@@ -1,0 +1,183 @@
+{
+  "analysis": {
+    "system": {
+      "role": "educational assistant",
+      "instructions": [
+        "Analyze user feedback for intent and impact",
+        "Identify affected lesson components",
+        "Determine update priority (tier 1-3)",
+        "Consider component dependencies"
+      ],
+      "outputSchema": {
+        "components": ["array of affected components"],
+        "intent": "clear action description",
+        "tier": "numeric 1-3",
+        "rationale": "user-friendly explanation",
+        "requires_foundation_update": "boolean"
+      },
+      "examples": [
+        {
+          "userMessage": "The lesson needs to focus more on fraction concepts",
+          "response": {
+            "components": ["standardsAddressed", "pedagogicalContext", "objectives"],
+            "intent": "strengthen conceptual understanding of fractions",
+            "tier": 1,
+            "rationale": "We'll update the foundational components to emphasize fraction concepts",
+            "requires_foundation_update": true
+          }
+        },
+        {
+          "userMessage": "Add more practice problems",
+          "response": {
+            "components": ["markupProblemSets"],
+            "intent": "expand practice opportunities",
+            "tier": 2,
+            "rationale": "I'll add more varied practice problems",
+            "requires_foundation_update": false
+          }
+        }
+      ]
+    },
+    "templates": {
+      "default": "Analyze this feedback for a {grade} {subject} lesson on {topic}",
+      "withProfile": "Consider student profile: {profile}"
+    }
+  },
+  "componentUpdates": {
+    "tiers": {
+      "1": {
+        "description": "Critical updates affecting lesson foundations",
+        "examples": [
+          "Standards alignment changes",
+          "Core concept modifications",
+          "Learning objective revisions"
+        ],
+        "settings": {
+          "temperature": 0.3,
+          "maxTokens": 2000
+        }
+      },
+      "2": {
+        "description": "Moderate updates to existing components",
+        "examples": [
+          "Adding practice problems",
+          "Modifying activities",
+          "Enhancing explanations"
+        ],
+        "settings": {
+          "temperature": 0.5,
+          "maxTokens": 3000
+        }
+      },
+      "3": {
+        "description": "Creative enhancements and extensions",
+        "examples": [
+          "Adding enrichment activities",
+          "Creating alternative examples",
+          "Developing extensions"
+        ],
+        "settings": {
+          "temperature": 0.7,
+          "maxTokens": 4000
+        }
+      }
+    },
+    "components": {
+      "standardsAddressed": {
+        "system": {
+          "role": "standards specialist",
+          "instructions": [
+            "Review and update standards alignment",
+            "Maintain grade-level appropriateness",
+            "Ensure standard progressions",
+            "Consider cross-cutting connections"
+          ]
+        },
+        "templates": {
+          "update": "Update standards for {topic} based on: {user_feedback}",
+          "validate": "Verify alignment with grade {grade} expectations"
+        }
+      },
+      "pedagogicalContext": {
+        "system": {
+          "role": "pedagogical expert",
+          "instructions": [
+            "Update conceptual framework",
+            "Refine learning progressions",
+            "Address misconceptions",
+            "Enhance teaching strategies"
+          ]
+        },
+        "templates": {
+          "update": "Modify pedagogical approach for {topic} considering: {user_feedback}",
+          "enrich": "Enhance conceptual connections and progressions"
+        }
+      },
+      "lessonFlow": {
+        "system": {
+          "role": "instructional designer",
+          "instructions": [
+            "Refine lesson structure",
+            "Enhance activities",
+            "Improve discussions",
+            "Update closure"
+          ]
+        },
+        "templates": {
+          "update": "Modify lesson flow based on: {user_feedback}",
+          "activities": "Update activities for {topic}",
+          "discussions": "Enhance discussion prompts"
+        }
+      },
+      "markupProblemSets": {
+        "system": {
+          "role": "mathematics educator",
+          "instructions": [
+            "Use proper LaTeX notation",
+            "Maintain difficulty progression",
+            "Include worked solutions",
+            "Provide scaffolding"
+          ]
+        },
+        "templates": {
+          "update": "Modify problem sets considering: {user_feedback}",
+          "add": "Create additional problems for {topic}",
+          "scaffold": "Adjust problem difficulty and support"
+        }
+      }
+    },
+    "responseTemplates": {
+      "success": {
+        "single": "I've updated the {component} section. Would you like to review the changes?",
+        "multiple": "I've updated these components: {components}. What would you like to review first?",
+        "foundation": "I've made foundational changes to {components}. This has improved the overall lesson coherence."
+      },
+      "clarification": {
+        "intent": "Could you clarify what specific aspects of {component} you'd like to modify?",
+        "scope": "Would you like me to update other related components as well?",
+        "confirmation": "Before I make these changes, could you confirm this is what you're looking for?"
+      },
+      "suggestions": {
+        "related": "Would you also like me to update {related_components} to maintain consistency?",
+        "enhancement": "I can also enhance {component} by {suggestion}. Would that be helpful?",
+        "alternative": "Here's another approach we could take: {alternative}"
+      }
+    }
+  },
+  "chatHistory": {
+    "system": {
+      "role": "conversation manager",
+      "instructions": [
+        "Maintain context across interactions",
+        "Track component changes",
+        "Ensure coherent dialogue",
+        "Provide helpful suggestions"
+      ]
+    },
+    "templates": {
+      "summary": "Previous changes to {component}: {changes}",
+      "context": "Current focus: {topic} for grade {grade}",
+      "progress": "We've updated: {updated_components}"
+    }
+  }
+}

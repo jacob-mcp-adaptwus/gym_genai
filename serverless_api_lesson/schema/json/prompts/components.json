@@ -1,0 +1,150 @@
+{
+    "standardsAddressed": {
+      "system": {
+        "role": "educational standards specialist",
+        "instructions": [
+          "Focus on grade-specific learning standards",
+          "Ensure standards progression and alignment",
+          "Include both content and practice standards",
+          "Consider prerequisite and future connections"
+        ],
+        "examples": [
+          {
+            "grade": "5",
+            "topic": "Fractions",
+            "output": {
+              "focalStandard": [
+                "5.NF.1: Add and subtract fractions with unlike denominators",
+                "5.NF.2: Solve word problems involving fraction addition/subtraction"
+              ],
+              "supportingStandards": [
+                "4.NF.1: Equivalent fractions principle",
+                "4.NF.2: Compare fractions with different numerators/denominators"
+              ]
+            }
+          }
+        ]
+      },
+      "templates": {
+        "base": "Generate educational standards for {topic} at grade {grade} level.",
+        "focal": "Identify core standards that directly address {topic}.",
+        "supporting": "List prerequisite and related standards that support learning of {topic}."
+      }
+    },
+    "pedagogicalContext": {
+      "system": {
+        "role": "pedagogical expert",
+        "instructions": [
+          "Analyze conceptual foundations and progressions",
+          "Identify common misconceptions and strategies",
+          "Consider diverse learning needs and approaches",
+          "Connect to real-world applications"
+        ]
+      },
+      "templates": {
+        "bigIdeas": "Identify core mathematical concepts in {topic} for grade {grade}.",
+        "prerequisites": "List essential prior knowledge needed for {topic}.",
+        "misconceptions": "Describe common student misconceptions about {topic} and strategies to address them.",
+        "progressions": "Outline how {topic} connects to past and future learning."
+      }
+    },
+    "objectives": {
+      "system": {
+        "role": "learning objectives specialist",
+        "instructions": [
+          "Write clear, measurable objectives",
+          "Address content and language goals",
+          "Include mathematical practices",
+          "Define success criteria"
+        ]
+      },
+      "templates": {
+        "content": "Create content objectives for {topic} aligned with grade {grade} standards.",
+        "language": "Specify language objectives supporting mathematical discourse.",
+        "practice": "Include mathematical practice objectives for {topic}.",
+        "success": "Define observable success criteria for each objective."
+      }
+    },
+    "lessonFlow": {
+      "system": {
+        "role": "instructional designer",
+        "instructions": [
+          "Design engaging and coherent lesson phases",
+          "Include student-centered activities",
+          "Incorporate discussion and reflection",
+          "Plan for differentiation"
+        ]
+      },
+      "templates": {
+        "launch": "Create an engaging hook and activation for {topic}.",
+        "explore": "Design student-centered activities exploring {topic}.",
+        "discuss": "Plan discussion prompts and synthesis of {topic}.",
+        "close": "Create closure activities and assessment for {topic}."
+      }
+    },
+    "markupProblemSets": {
+      "system": {
+        "role": "mathematics content creator",
+        "instructions": [
+          "Use proper LaTeX notation",
+          "Create clear problem statements",
+          "Provide worked solutions",
+          "Include scaffolded hints"
+        ],
+        "examples": [
+          {
+            "type": "practice",
+            "difficulty": 3,
+            "problem": {
+              "stem": "Solve: $\\frac{x^2 + 1}{x - 2} = 4$ for $x \\neq 2$",
+              "context": "This equation appears when analyzing limits"
+            },
+            "solution": {
+              "answer": "$x = 3$ or $x = -1$",
+              "workingOut": [
+                "1. Multiply both sides by $(x-2)$",
+                "2. Expand to get $x^2 - 4x + 9 = 0$"
+              ]
+            }
+          }
+        ]
+      },
+      "templates": {
+        "warmup": "Create warm-up problems for {topic} at grade {grade} level.",
+        "practice": "Generate practice problems with varying difficulty.",
+        "extension": "Design challenge problems extending {topic}."
+      }
+    },
+    "assessments": {
+      "system": {
+        "role": "assessment specialist",
+        "instructions": [
+          "Align with learning objectives",
+          "Include formative checkpoints",
+          "Provide clear success criteria",
+          "Plan intervention strategies"
+        ]
+      },
+      "templates": {
+        "formative": "Create formative assessment checkpoints for {topic}.",
+        "summative": "Design summative tasks aligned with objectives.",
+        "criteria": "Specify clear scoring criteria and expectations."
+      }
+    },
+    "accessibility": {
+      "system": {
+        "role": "accessibility specialist",
+        "instructions": [
+          "Support diverse learning needs",
+          "Include language scaffolds",
+          "Provide multiple representations",
+          "Plan accommodations"
+        ]
+      },
+      "templates": {
+        "language": "Create language supports for {topic}.",
+        "visual": "Design visual supports and models.",
+        "accommodations": "Specify necessary accommodations."
+      }
+    }
+  }

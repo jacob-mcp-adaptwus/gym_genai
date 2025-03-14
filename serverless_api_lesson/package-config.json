@@ -1,0 +1,67 @@
+{
+    "pythonRequirements": {
+      "layer": {
+        "name": "python-deps",
+        "description": "Python dependencies for Mathtilda backend"
+      },
+      "noDeploy": [
+        "pytest",
+        "pytest-cov",
+        "pytest-env",
+        "pytest-xdist",
+        "coverage",
+        "black",
+        "flake8",
+        "mypy",
+        "boto3",
+        "botocore",
+        "setuptools",
+        "pip",
+        "wheel"
+      ],
+      "patterns": [
+        "!**/*.pyc",
+        "!**/*.pyo",
+        "!**/__pycache__/**",
+        "!**/.pytest_cache/**",
+        "!**/.coverage",
+        "!**/.python-version",
+        "!**/*.dist-info/**",
+        "!**/*.egg-info/**"
+      ],
+      "slim": true,
+      "slimPatterns": [
+        "**/*.py[cod]",
+        "**/__pycache__/**",
+        "**/*.so"
+      ],
+      "slimPatternsAppend": [
+        "**/tests/**",
+        "**/test/**",
+        "**/*.md",
+        "**/*.rst"
+      ],
+      "strip": true,
+      "useStaticCache": true,
+      "useDownloadCache": true,
+      "caching": true,
+      "staticCacheMaxVersions": 8
+    },
+    "package": {
+      "patterns": [
+        "!node_modules/**",
+        "!tests/**",
+        "!.venv/**",
+        "!.git/**",
+        "!*.pyc",
+        "!.pytest_cache/**",
+        "!__pycache__/**",
+        "!.coverage",
+        "!htmlcov/**",
+        "!.gitlab-ci.yml",
+        "!.gitignore",
+        "!README.md",
+        "!requirements-dev.txt"
+      ]
+    }
+  }

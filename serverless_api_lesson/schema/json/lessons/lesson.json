@@ -1,0 +1,244 @@
+{
+    "metadata": {
+        "topic": "string",
+        "grade": "string",
+        "subject": "string",
+        "lastModified": "string",
+        "profileId": "string",
+        "lessonId": "string",
+        "email": "string",
+        "status": "string",
+        "version": "number",
+        "standardsAddressed": {
+            "focalStandard": ["string"],
+            "supportingStandards": ["string"]
+        },
+        "profileName": "string"
+    },
+    "standardsAddressed": {
+        "focalStandard": ["string"],
+        "supportingStandards": ["string"]
+    },
+    "pedagogicalContext": {
+        "bigIdeas": ["string"],
+        "prerequisites": ["string"],
+        "misconceptions": {
+            "common": ["string"],
+            "addressingStrategies": ["string"]
+        },
+        "mathematicalProgressions": {
+            "priorKnowledge": ["string"],
+            "futureConnections": ["string"],
+            "crossCutting": ["string"]
+        }
+    },
+    "objectives": {
+        "content": ["string"],
+        "language": ["string"],
+        "mathematical_practice": ["string"],
+        "success_criteria": ["string"]
+    },
+    "lessonFlow": {
+        "launch": {
+            "duration": "string",
+            "hook": {
+                "description": "string",
+                "rationale": "string"
+            },
+            "priorKnowledgeActivation": ["string"],
+            "teacherMoves": ["string"]
+        },
+        "explore": {
+            "activities": [{
+                "title": "string",
+                "description": "string",
+                "grouping": "string",
+                "steps": ["string"],
+                "differentiationNotes": {
+                    "acceleration": ["string"],
+                    "support": ["string"],
+                    "ell": ["string"]
+                }
+            }]
+        },
+        "discussion": {
+            "keyQuestions": [{
+                "question": "string",
+                "purpose": "string",
+                "anticipatedResponses": ["string"]
+            }],
+            "studentDiscoursePrompts": ["string"]
+        },
+        "closure": {
+            "synthesisTasks": ["string"],
+            "reflectionPrompts": ["string"],
+            "exitTicket": {
+                "question": "string",
+                "expectedResponse": "string",
+                "scoringGuidance": "string"
+            }
+        }
+    },
+    "markupProblemSets": {
+        "warmup": [{
+            "type": "string",
+            "difficulty": "number",
+            "problem": {
+                "stem": "string",
+                "context": "string"
+            },
+            "solution": {
+                "answer": "string",
+                "workingOut": "string"
+            },
+            "hints": [{
+                "text": "string",
+                "scaffold": "string"
+            }]
+        }],
+        "corePractice": [{
+            "type": "string",
+            "difficulty": "number",
+            "problem": {
+                "stem": "string",
+                "context": "string",
+                "scaffoldLevel": "number"
+            }
+        }],
+        "extension": [{
+            "type": "string",
+            "difficulty": "number",
+            "problem": {
+                "stem": "string",
+                "openEndedPrompt": "string"
+            }
+        }]
+    },
+    "markupProblemSetsAboveGradeLevel": {
+        "warmup": [{
+            "type": "string",
+            "difficulty": "number",
+            "problem": {
+                "stem": "string",
+                "context": "string"
+            },
+            "solution": {
+                "answer": "string",
+                "workingOut": "string"
+            },
+            "hints": [{
+                "text": "string",
+                "scaffold": "string"
+            }]
+        }],
+        "corePractice": [{
+            "type": "string",
+            "difficulty": "number",
+            "problem": {
+                "stem": "string",
+                "context": "string",
+                "scaffoldLevel": "number"
+            }
+        }],
+        "extension": [{
+            "type": "string",
+            "difficulty": "number",
+            "problem": {
+                "stem": "string",
+                "openEndedPrompt": "string"
+            }
+        }]
+    },
+    "markupProblemSetsBelowGradeLevel": {
+        "warmup": [{
+            "type": "string",
+            "difficulty": "number",
+            "problem": {
+                "stem": "string",
+                "context": "string"
+            },
+            "solution": {
+                "answer": "string",
+                "workingOut": "string"
+            },
+            "hints": [{
+                "text": "string",
+                "scaffold": "string"
+            }]
+        }],
+        "corePractice": [{
+            "type": "string",
+            "difficulty": "number",
+            "problem": {
+                "stem": "string",
+                "context": "string",
+                "scaffoldLevel": "number"
+            }
+        }],
+        "extension": [{
+            "type": "string",
+            "difficulty": "number",
+            "problem": {
+                "stem": "string",
+                "openEndedPrompt": "string"
+            }
+        }]
+    },
+    "assessments": {
+        "formative": {
+            "checkpoints": [{
+                "timing": "string",
+                "task": "string",
+                "successCriteria": ["string"],
+                "intervention": {
+                    "support": "string",
+                    "extension": "string"
+                }
+            }],
+            "observationGuide": {
+                "lookFor": ["string"],
+                "listenFor": ["string"]
+            }
+        },
+        "summative": {
+            "tasks": [{
+                "description": "string",
+                "alignedObjectives": ["string"],
+                "scoringCriteria": ["string"]
+            }]
+        }
+    },
+    "accessibility": {
+        "languageSupports": {
+            "vocabulary": [{
+                "term": "string",
+                "definition": "string",
+                "representation": "string"
+            }],
+            "sentenceFrames": ["string"],
+            "comprehensionStrategies": ["string"]
+        },
+        "visualSupports": ["string"],
+        "accommodations": {
+            "presentation": ["string"],
+            "response": ["string"],
+            "setting": ["string"],
+            "timing": ["string"]
+        }
+    },
+    "materials": {
+        "required": ["string"],
+        "optional": ["string"],
+        "technology": ["string"]
+    },
+    "studentProfile": {
+        "profileName": "string",
+        "adaptations": [
+            "string"
+        ],
+        "teachingStrategies": [
+            "string"
+        ]
+    }
+
+}

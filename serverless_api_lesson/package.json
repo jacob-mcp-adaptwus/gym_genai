@@ -1,0 +1,26 @@
+{
+  "name": "mathtilda-api",
+  "version": "1.0.0",
+  "description": "An Serverless api",
+  "author": "",
+  "scripts": {
+    "ci": "python -m venv venv  && venv/bin/activate && pip install -r requirements.txt",
+    "lint": "pylint -d R0801 src/ && python -m pytest --cov=./src tests/ "
+  },
+  "devDependencies": {
+    "husky": "6.0.0",
+    "serverless": "^4.4.18",
+    "serverless-offline": "^14.4.0",
+    "serverless-prune-plugin": "^2.1.0",
+    "serverless-python-requirements": "^6.1.1",
+    "serverless-stage-manager": "^1.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.374.0"
+  }
+}

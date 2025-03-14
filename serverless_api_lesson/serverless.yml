@@ -1,0 +1,375 @@
+org: mathtilda
+service: mathtilda-backend-infrastructure
+
+provider:
+  name: aws
+  runtime: python3.12
+  stage: ${file(config.${opt:stage, 'dev'}.json):stage}
+  # Add region for better control
+  region: ${file(config.${opt:stage, 'dev'}.json):region, 'us-east-1'}
+  # Add tags for better resource management
+  tags:
+    Environment: ${self:provider.stage}
+    Project: mathtilda
+    
+  # Memory and timeout configurations for better performance and cost optimization
+  memorySize: 256
+  timeout: 68
+  apiGateway:
+    # Moved binary media types to a more organized structure
+    binaryMediaTypes: ${self:custom.binaryMediaTypes}
+    # Add minimum compression size for better performance
+    minimumCompressionSize: 1024
+    # Add metrics for monitoring
+    metrics: true
+    timeoutInMillis: 69000
+
+  environment: ${self:custom.environment}
+  
+  iam:
+    role:
+      # Added proper naming for the role
+      name: ${self:service}-${self:provider.stage}-lambda-role
+      statements: ${self:custom.iamRoleStatements}
+
+
+custom:
+  # Stage configuration
+  stages:
+    - dev
+    - prod
+    
+  # Centralized configuration management
+  binaryMediaTypes:
+    - 'image/png'
+    - 'image/jpeg'
+    - 'application/xlsx'
+    - 'multipart/form-data'
+    
+  # Resource naming with proper stage separation
+  resourceNames:
+    filesBucket: 'mathtilda-files-${self:provider.stage}'
+    lessonsTable: 'mathtilda-lesson-table-${self:provider.stage}'
+    profilesTable: 'mathtilda-profiles-table-${self:provider.stage}'
+    filesTable: 'mathtilda-files-table-${self:provider.stage}'
+    cognitoSecret: 'cognito-${self:provider.stage}'
+    lessonVersionsTable: 'mathtilda-lessonversions-${self:provider.stage}'
+    chatHistoryTable: 'mathtilda-chat-history-${self:provider.stage}'
+
+  # Environment variables configuration
+  environment:
+    DATABRICKS_SECRETS: 'DATABRICKS_SECRETS'
+    FILES_BUCKET: ${self:custom.resourceNames.filesBucket}
+    LESSONS_TABLE: ${self:custom.resourceNames.lessonsTable}
+    LESSON_VERSIONS_TABLE: ${self:custom.resourceNames.lessonVersionsTable}
+    PROFILES_TABLE: ${self:custom.resourceNames.profilesTable}
+    COGNITO: ${self:custom.resourceNames.cognitoSecret}
+    CHAT_HISTORY_TABLE: ${self:custom.resourceNames.chatHistoryTable}
+    STAGE: ${self:provider.stage}
+
+  # IAM role statements separated for better management
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - arn:aws:dynamodb:*:*:*
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: 
+        - arn:aws:s3:::${self:custom.resourceNames.filesBucket}
+        - arn:aws:s3:::${self:custom.resourceNames.filesBucket}/*
+    - Effect: Allow
+      Action:
+        - secretsmanager:GetSecretValue
+      Resource: 
+        - arn:aws:secretsmanager:${self:provider.region}:*:secret:${self:custom.resourceNames.cognitoSecret}*
+    - Effect: Allow
+      Action:
+        - bedrock:*
+      Resource: 
+       -  arn:aws:bedrock:*:*:*
+
+  # Python requirements optimization
+  pythonRequirements:
+    dockerizePip: ${file(config.${opt:stage, 'dev'}.json):dockerizePip, true}
+    requirementsFile: requirements.txt
+    noDeploy: ${file(excludes/python-packages.json):noDeploy}
+    patterns: ${file(excludes/python-patterns.json):patterns}
+
+functions:
+  # Grouped by functionality with shared configurations
+  authorize:
+    handler: src/auth.authorizer
+    timeout: 5
+    memorySize: 128
+
+  # Lesson management functions
+  createLessons:
+    handler: src/lesson_planner.create_lesson
+    timeout: 65
+    events:
+      - http:
+          path: /lessons/create
+          method: post
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  saveLesson:
+    handler: src/lesson_planner.save_lesson
+    events:
+      - http:
+          path: /lessons/save
+          method: post
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  listLessons:
+    handler: src/lesson_planner.list_lessons
+    events:
+      - http:
+          path: /lessons/list
+          method: get
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  # Profile management functions
+  createProfile:
+    handler: src/profiles.create_profile
+    events:
+      - http:
+          path: /profiles/create
+          method: post
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  listProfiles:
+    handler: src/profiles.list_profiles
+    events:
+      - http:
+          path: /profiles/list
+          method: get
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  updateProfile:
+    handler: src/profiles.update_profile
+    events:
+      - http:
+          path: /profiles/{profileName}
+          method: put
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  deleteProfile:
+    handler: src/profiles.delete_profile
+    events:
+      - http:
+          path: /profiles/{profileName}
+          method: delete
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  deleteLesson:
+      handler: src/lesson_planner.delete_lesson
+      events:
+        - http:
+            path: /lessons/{lessonId}
+            method: delete
+            cors: ${file(api-config.json):cors}
+            authorizer: ${file(api-config.json):authorizer}
+
+  getLessonVersions:
+    handler: src/lesson_planner.get_lesson_versions
+    events:
+      - http:
+          path: /lessons/versions/{lessonId}
+          method: get
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  chatWithLesson:
+    handler: src/lesson_chat.chat_with_lesson
+    timeout: 65
+    events:
+      - http:
+          path: /lessons/chat
+          method: post
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  getChatHistory:
+    handler: src/lesson_chat.get_chat_history
+    events:
+      - http:
+          path: /lessons/{lessonId}/chat-history
+          method: get
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  analyzeMessage:
+    handler: src/lesson_chat.analyze_message
+    events:
+      - http:
+          path: /lessons/analyze
+          method: post
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  chatWithComponent:
+    handler: src/lesson_chat.chat_with_component
+    timeout: 65
+    events:
+      - http:
+          path: /lessons/chat/component
+          method: post
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+plugins:
+  - serverless-python-requirements
+  - serverless-prune-plugin
+
+resources:
+  Resources:
+    FileBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.resourceNames.filesBucket}
+        VersioningConfiguration:
+          Status: Enabled
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+    FilesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.resourceNames.filesTable}
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+          - AttributeName: filepath
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+          - AttributeName: filepath
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+
+    LessonVersionsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.resourceNames.lessonVersionsTable}
+        AttributeDefinitions:
+          - AttributeName: lessonId
+            AttributeType: S
+          - AttributeName: profileId
+            AttributeType: S
+          - AttributeName: version
+            AttributeType: N
+          - AttributeName: email
+            AttributeType: S
+          - AttributeName: timestamp
+            AttributeType: S
+        KeySchema:
+          - AttributeName: lessonId
+            KeyType: HASH
+          - AttributeName: profileId
+            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: EmailIndex
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+              - AttributeName: timestamp
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+          - IndexName: VersionIndex
+            KeySchema:
+              - AttributeName: lessonId
+                KeyType: HASH
+              - AttributeName: version
+                KeyType: RANGE
+            Projection:
+              ProjectionType: INCLUDE
+              NonKeyAttributes:
+                - content
+                - title
+                - grade
+                - subject
+                - profileId
+                - profileVersion
+        BillingMode: PAY_PER_REQUEST
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+
+    LessonTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.resourceNames.lessonsTable}
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+          - AttributeName: lessonId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+          - AttributeName: lessonId
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+
+    ProfilesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.resourceNames.profilesTable}
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+          - AttributeName: profilename
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+          - AttributeName: profilename
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+
+    ChatHistoryTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.resourceNames.chatHistoryTable}
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+          - AttributeName: lessonId
+            AttributeType: S
+          - AttributeName: timestamp
+            AttributeType: S
+        KeySchema:
+          - AttributeName: lessonId
+            KeyType: HASH
+          - AttributeName: timestamp
+            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: EmailIndex
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+              - AttributeName: timestamp
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+        BillingMode: PAY_PER_REQUEST
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true

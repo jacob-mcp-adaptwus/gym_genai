@@ -1,0 +1,199 @@
+{
+    "metadata": {
+      "planId": "string",
+      "userId": "string",
+      "email": "string",
+      "planName": "string",
+      "createdAt": "string",
+      "lastModified": "string",
+      "version": "number",
+      "status": "string"
+    },
+    "profile": {
+      "currentStats": {
+        "weight": "number",
+        "height": "number",
+        "bodyFat": "number",
+        "measurements": {
+          "chest": "number",
+          "waist": "number",
+          "hips": "number",
+          "arms": "number",
+          "legs": "number",
+          "shoulders": "number"
+        },
+        "strengthLevels": {
+          "bench": "number",
+          "squat": "number",
+          "deadlift": "number",
+          "overhead": "number"
+        }
+      },
+      "goals": {
+        "primary": "string",
+        "secondary": "string",
+        "timeline": "string",
+        "targetWeight": "number",
+        "targetBodyFat": "number",
+        "competitionDate": "string",
+        "targetMeasurements": {
+          "chest": "number",
+          "waist": "number",
+          "hips": "number",
+          "arms": "number",
+          "legs": "number",
+          "shoulders": "number"
+        }
+      },
+      "experience": {
+        "level": "string",
+        "yearsTraining": "number",
+        "previousCompetitions": ["string"],
+        "injuries": ["string"],
+        "limitations": ["string"]
+      }
+    },
+    "workouts": {
+      "splitStructure": {
+        "type": "string",
+        "daysPerWeek": "number",
+        "restDays": ["string"],
+        "cycleLength": "number"
+      },
+      "weeklySchedule": [{
+        "day": "string",
+        "focus": "string",
+        "exercises": [{
+          "name": "string",
+          "muscleGroup": "string",
+          "sets": "number",
+          "repsRange": "string",
+          "intensity": "string",
+          "rest": "string",
+          "techniques": ["string"],
+          "notes": "string"
+        }],
+        "cardio": {
+          "type": "string",
+          "duration": "string",
+          "intensity": "string",
+          "timing": "string"
+        }
+      }],
+      "progression": {
+        "scheme": "string",
+        "deloadFrequency": "string",
+        "adaptationStrategy": "string",
+        "volumeAdjustments": [{
+          "week": "number",
+          "adjustment": "string"
+        }]
+      }
+    },
+    "nutrition": {
+      "calorieTargets": {
+        "trainingDays": "number",
+        "restDays": "number",
+        "weeklyAverage": "number",
+        "adjustmentRate": "number"
+      },
+      "macroBreakdown": {
+        "protein": {
+          "grams": "number",
+          "percentage": "number"
+        },
+        "carbs": {
+          "grams": "number",
+          "percentage": "number"
+        },
+        "fats": {
+          "grams": "number",
+          "percentage": "number"
+        }
+      },
+      "mealTiming": [{
+        "meal": "string",
+        "time": "string",
+        "calories": "number",
+        "protein": "number",
+        "carbs": "number",
+        "fats": "number",
+        "purpose": "string"
+      }],
+      "foodSelections": {
+        "proteinSources": ["string"],
+        "carbSources": ["string"],
+        "fatSources": ["string"],
+        "vegetables": ["string"],
+        "beverages": ["string"],
+        "supplements": ["string"]
+      },
+      "peakWeekProtocol": {
+        "waterManipulation": ["string"],
+        "sodiumManipulation": ["string"],
+        "carbLoadingStrategy": "string"
+      }
+    },
+    "supplementation": {
+      "performanceEnhancers": [{
+        "name": "string",
+        "category": "string",
+        "dosage": "string",
+        "frequency": "string",
+        "timing": "string",
+        "duration": "string",
+        "purpose": "string",
+        "notes": "string"
+      }],
+      "recoveryAids": [{
+        "name": "string",
+        "dosage": "string",
+        "frequency": "string",
+        "timing": "string",
+        "purpose": "string"
+      }],
+      "hormoneProtocols": [{
+        "compound": "string",
+        "dosage": "string",
+        "frequency": "string",
+        "duration": "string",
+        "cycleWeeks": "number",
+        "pctProtocol": "string",
+        "bloodworkSchedule": ["string"]
+      }],
+      "healthSupports": [{
+        "name": "string",
+        "dosage": "string",
+        "purpose": "string",
+        "timing": "string"
+      }]
+    },
+    "coachFeedback": {
+      "lastUpdated": "string",
+      "adjustments": [{
+        "component": "string",
+        "recommendation": "string",
+        "reason": "string",
+        "implementationDate": "string"
+      }],
+      "progressNotes": [{
+        "date": "string",
+        "metrics": {
+          "weightChange": "number",
+          "measurementChanges": {
+            "chest": "number",
+            "waist": "number",
+            "arms": "number",
+            "legs": "number"
+          },
+          "strengthChanges": {
+            "bench": "number",
+            "squat": "number",
+            "deadlift": "number"
+          }
+        },
+        "observations": "string",
+        "nextStepsRecommendation": "string"
+      }]
+    }
+  }

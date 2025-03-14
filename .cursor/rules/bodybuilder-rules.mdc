@@ -1,0 +1,110 @@
+---
+description: rules-project
+globs: 
+alwaysApply: false
+---
+[bodybuilding.json](mdc:bodybuilding.json) is the object we will by dynamically render each section will be rendered independtly 
+[serverless.yml](mdc:serverless_api_lesson/serverless.yml)  is a lessonplanner project I want to template off
+[lesson.json](mdc:serverless_api_lesson/schema/json/lessons/lesson.json) is the equivalent of [bodybuilding.json](mdc:bodybuilding.json) . 
+[lesson_chat.py](mdc:serverless_api_lesson/src/lesson_chat.py) is chat interface you have message anaylisis
+[component_orchestrator.py](mdc:serverless_api_lesson/src/services/chat/orchestration/component_orchestrator.py) is the primary way of updating components which are keys on the lesson object
+[parallellessonservice.py](mdc:serverless_api_lesson/src/services/parallellessonservice.py) is old way of generating entire lesson
+[chat_prompt_builder.py](mdc:serverless_api_lesson/src/services/chat/prompts/chat_prompt_builder.py) is chat prompt buuilding for bedrock api call we pass in [lesson.json](mdc:serverless_api_lesson/schema/json/lessons/lesson.json) object at key level "objectives" to reinforce prompt engineering structure.
+[system_prompt_builder.py](mdc:serverless_api_lesson/src/services/chat/prompts/system_prompt_builder.py) is system level prompts
+[bedrockmanager.py](mdc:serverless_api_lesson/src/aws/bedrockmanager.py) wrapper around bedrock 
+We are copying this lesson planner structure and methodlody for dynamically geenrating 
+[bodybuilding.json](mdc:bodybuilding.json) is the new object eseentially we are copying the serverless_api_lesson folder and creating a new api for this bodybuilding app. 
+
+Rules for Converting Lesson App to Bodybuilding App
+Core Principles
+
+Maintain Architecture: Preserve the serverless architecture, AWS resources, and API structure.
+Schema Replacement: Replace lesson.json schema with bodybuilding.json schema throughout the codebase.
+Naming Consistency: Rename all lesson-related terms to bodybuilding-related terms.
+Preserve Core Logic: Keep the core orchestration, generation, and chat logic intact.
+Minimal Code Changes: Focus on schema, naming, and prompt changes rather than core logic.
+
+Specific Conversion Rules
+Resource Naming
+
+Replace "mathtilda" with "bodybuildr" in service names and resources
+Replace "lesson" with "plan" in table names and API paths
+Replace "profiles" with "users" or "athletes" in table names and API paths
+
+Lambda Functions
+
+Update function handlers to reflect bodybuilding domain:
+
+create_lesson → create_plan
+save_lesson → save_plan
+list_lessons → list_plans
+chat_with_lesson → chat_with_plan
+
+
+
+Data Models
+
+Replace all references to the lesson schema with bodybuilding schema
+Update DynamoDB table schemas to match new requirements:
+
+lessonsTable → plansTable
+lessonVersionsTable → planVersionsTable
+chatHistoryTable → planChatHistoryTable
+
+
+
+Prompts & AI Components
+
+Update all prompts to focus on bodybuilding expertise instead of education
+Keep message analysis and component orchestration intact
+Replace educational terminology with fitness terminology:
+
+"pedagogicalContext" → "trainingContext"
+"standardsAddressed" → "fitnessGoals"
+"markupProblemSets" → "workoutRoutines"
+
+
+
+Request/Response Formats
+
+Maintain the same API request/response structure, only updating field names:
+
+Update request body fields to match bodybuilding domain
+Keep response format structure consistent
+
+
+
+Code Structure
+
+Preserve the modular structure and file organization
+Create equivalent class hierarchies for the bodybuilding domain:
+
+LessonService → BodybuildingPlanService
+ComponentOrchestrator → WorkoutOrchestrator
+MessageAnalyzer → UserFeedbackAnalyzer
+
+
+
+Prompting Strategy
+
+Update the AI system prompts in all components to reflect bodybuilding expertise
+Keep the same structure for JSON formatting and response handling
+Update examples to reflect bodybuilding plans instead of lesson plans
+
+Implementation Phases
+
+Schema Migration: Convert all JSON schemas first
+Rename Resources: Update all resource names in serverless.yml
+Update Lambda Functions: Modify function names and handlers
+Refine Prompts: Update all AI prompts to bodybuilding context
+Test Basic API Flow: Verify create/save/list plan functionality
+Enhance Chat Logic: Ensure chat functionality works with bodybuilding context
+
+Verification Checklist
+
+API endpoints match domain needs
+DynamoDB schemas support new data models
+Lambda functions and handlers are correctly named
+AI prompts produce appropriate bodybuilding content
+Storage and retrieval of plans works correctly
+Chat interactions maintain context about workout plans
