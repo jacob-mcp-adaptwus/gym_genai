@@ -1,0 +1,50 @@
+{
+  "templates": {
+    "trainingContext": {
+      "title": "Training Context Update",
+      "description": "Update training context based on user feedback"
+    },
+    "fitnessGoals": {
+      "title": "Fitness Goals Update",
+      "description": "Update fitness goals based on user feedback"
+    },
+    "workoutRoutines": {
+      "title": "Workout Routines Update",
+      "description": "Update workout routines based on user feedback"
+    },
+    "nutritionPlan": {
+      "title": "Nutrition Plan Update",
+      "description": "Update nutrition plan based on user feedback"
+    },
+    "supplementation": {
+      "title": "Supplementation Update",
+      "description": "Update supplementation protocol based on user feedback"
+    },
+    "progressMetrics": {
+      "title": "Progress Metrics Update",
+      "description": "Update progress metrics based on user feedback"
+    },
+    "recoveryProtocol": {
+      "title": "Recovery Protocol Update",
+      "description": "Update recovery protocol based on user feedback"
+    },
+    "adaptations": {
+      "title": "Adaptations Update",
+      "description": "Update adaptation strategies based on user feedback"
+    }
+  },
+  "tiers": {
+    "1": {
+      "description": "Minor adjustments",
+      "temperature": 0.3
+    },
+    "2": {
+      "description": "Moderate changes",
+      "temperature": 0.5
+    },
+    "3": {
+      "description": "Major revisions",
+      "temperature": 0.7
+    }
+  }
+} 

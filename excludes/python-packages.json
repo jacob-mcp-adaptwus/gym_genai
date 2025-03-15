@@ -1,0 +1,13 @@
+{
+    "noDeploy": [
+        "boto3",
+        "botocore",
+        "docutils",
+        "jmespath",
+        "python-dateutil",
+        "s3transfer",
+        "six",
+        "pip",
+        "setuptools"
+    ]
+} 

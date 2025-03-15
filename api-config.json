@@ -1,0 +1,18 @@
+{
+    "cors": {
+        "origins": ["*"],
+        "headers": [
+            "Content-Type",
+            "X-Amz-Date",
+            "Authorization",
+            "X-Api-Key",
+            "X-Amz-Security-Token"
+        ],
+        "allowCredentials": false
+    },
+    "authorizer": {
+        "name": "authorize",
+        "type": "token",
+        "identitySource": "method.request.header.Authorization"
+    }
+} 

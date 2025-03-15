@@ -1,0 +1,318 @@
+# org: bodybuildr
+service: bodybuildr-backend-infrastructure
+
+provider:
+  name: aws
+  runtime: python3.12
+  stage: ${file(config.${opt:stage, 'dev'}.json):stage}
+  region: ${file(config.${opt:stage, 'dev'}.json):region, 'us-east-1'}
+  tags:
+    Environment: ${self:provider.stage}
+    Project: bodybuildr
+    
+  memorySize: 256
+  timeout: 68
+  apiGateway:
+    binaryMediaTypes: ${self:custom.binaryMediaTypes}
+    minimumCompressionSize: 1024
+    metrics: true
+    timeoutInMillis: 69000
+
+  environment: ${self:custom.environment}
+  
+  iam:
+    role:
+      name: ${self:service}-${self:provider.stage}-lambda-role
+      statements: ${self:custom.iamRoleStatements}
+
+custom:
+  stages:
+    - dev
+    - prod
+    
+  binaryMediaTypes:
+    - 'image/png'
+    - 'image/jpeg'
+    - 'application/xlsx'
+    - 'multipart/form-data'
+    
+  resourceNames:
+    filesBucket: 'bodybuildr-files-${self:provider.stage}'
+    plansTable: 'bodybuildr-plans-table-${self:provider.stage}'
+    usersTable: 'bodybuildr-users-table-${self:provider.stage}'
+    filesTable: 'bodybuildr-files-table-${self:provider.stage}'
+    cognitoSecret: 'cognito-${self:provider.stage}'
+    planVersionsTable: 'bodybuildr-planversions-${self:provider.stage}'
+    chatHistoryTable: 'bodybuildr-chat-history-${self:provider.stage}'
+    progressTable: 'bodybuildr-progress-${self:provider.stage}'
+
+  environment:
+    FILES_BUCKET: ${self:custom.resourceNames.filesBucket}
+    PLANS_TABLE: ${self:custom.resourceNames.plansTable}
+    PLAN_VERSIONS_TABLE: ${self:custom.resourceNames.planVersionsTable}
+    USERS_TABLE: ${self:custom.resourceNames.usersTable}
+    COGNITO: ${self:custom.resourceNames.cognitoSecret}
+    CHAT_HISTORY_TABLE: ${self:custom.resourceNames.chatHistoryTable}
+    PROGRESS_TABLE: ${self:custom.resourceNames.progressTable}
+    STAGE: ${self:provider.stage}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - arn:aws:dynamodb:*:*:*
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: 
+        - arn:aws:s3:::${self:custom.resourceNames.filesBucket}
+        - arn:aws:s3:::${self:custom.resourceNames.filesBucket}/*
+    - Effect: Allow
+      Action:
+        - secretsmanager:GetSecretValue
+      Resource: 
+        - arn:aws:secretsmanager:${self:provider.region}:*:secret:${self:custom.resourceNames.cognitoSecret}*
+    - Effect: Allow
+      Action:
+        - bedrock:*
+      Resource: 
+        - arn:aws:bedrock:*:*:*
+
+  pythonRequirements:
+    dockerizePip: false
+    requirementsFile: requirements.txt
+    noDeploy: ${file(excludes/python-packages.json):noDeploy}
+    patterns: ${file(excludes/python-patterns.json):patterns}
+
+functions:
+  authorize:
+    handler: src/handlers/auth_handler.authorizer
+    timeout: 5
+    memorySize: 128
+
+  # Workout Plan Management
+  createPlan:
+    handler: src/handlers/plan_handler.create_plan
+    timeout: 65
+    events:
+      - http:
+          path: /plans/create
+          method: post
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  savePlan:
+    handler: src/handlers/plan_handler.save_plan
+    events:
+      - http:
+          path: /plans/save
+          method: post
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  listPlans:
+    handler: src/handlers/plan_handler.list_plans
+    events:
+      - http:
+          path: /plans/list
+          method: get
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  # User Profile Management
+  createUser:
+    handler: src/handlers/user_handler.create_user
+    events:
+      - http:
+          path: /users/create
+          method: post
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  updateUser:
+    handler: src/handlers/user_handler.update_user
+    events:
+      - http:
+          path: /users/{userId}
+          method: put
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  getUser:
+    handler: src/handlers/user_handler.get_user
+    events:
+      - http:
+          path: /users/{userId}
+          method: get
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  # Progress Tracking
+  updateProgress:
+    handler: src/handlers/progress_handler.update_progress
+    events:
+      - http:
+          path: /progress/{userId}
+          method: post
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  getProgress:
+    handler: src/handlers/progress_handler.get_progress
+    events:
+      - http:
+          path: /progress/{userId}
+          method: get
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  # Plan Versioning and Chat
+  getPlanVersions:
+    handler: src/handlers/plan_handler.get_plan_versions
+    events:
+      - http:
+          path: /plans/versions/{planId}
+          method: get
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  chatWithCoach:
+    handler: src/handlers/chat_handler.chat_with_coach
+    timeout: 65
+    events:
+      - http:
+          path: /plans/chat
+          method: post
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+  getChatHistory:
+    handler: src/handlers/chat_handler.get_chat_history
+    events:
+      - http:
+          path: /plans/{planId}/chat-history
+          method: get
+          cors: ${file(api-config.json):cors}
+          authorizer: ${file(api-config.json):authorizer}
+
+plugins:
+  - serverless-python-requirements
+  - serverless-prune-plugin
+
+resources:
+  Resources:
+    FileBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.resourceNames.filesBucket}
+        VersioningConfiguration:
+          Status: Enabled
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+
+    FilesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.resourceNames.filesTable}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: filepath
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: filepath
+            KeyType: RANGE
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+
+    PlansTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.resourceNames.plansTable}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: planId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: planId
+            KeyType: RANGE
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+
+    PlanVersionsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.resourceNames.planVersionsTable}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: planId
+            AttributeType: S
+          - AttributeName: version
+            AttributeType: N
+        KeySchema:
+          - AttributeName: planId
+            KeyType: HASH
+          - AttributeName: version
+            KeyType: RANGE
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.resourceNames.usersTable}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+
+    ProgressTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.resourceNames.progressTable}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: date
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: date
+            KeyType: RANGE
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+
+    ChatHistoryTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.resourceNames.chatHistoryTable}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: userId_planId
+            AttributeType: S
+          - AttributeName: timestamp
+            AttributeType: N
+        KeySchema:
+          - AttributeName: userId_planId
+            KeyType: HASH
+          - AttributeName: timestamp
+            KeyType: RANGE
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true 
