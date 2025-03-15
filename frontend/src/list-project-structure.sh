@@ -1,0 +1,1 @@
+find . -not -path '*/\.*'  -not -path '*/assets/*'  -not -path '*/node_modules/*' -not -path '*/venv/*' -not -path '*/env/*' -not -path '*/build/*' -not -path '*/dist/*' -not -path '*/__pycache__/*' | sed -e "s/[^-][^\/]*\// |─/g" -e "s/|\([^ ]\)/├\1/"

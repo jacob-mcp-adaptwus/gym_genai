@@ -176,7 +176,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742047269998-2025-03-15T14:01:09.998Z/bodybuildr-backend-infrastructure.zip"
+          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742048085306-2025-03-15T14:14:45.306Z/bodybuildr-backend-infrastructure.zip"
         },
         "Handler": "src/handlers/auth_handler.authorizer",
         "Runtime": "python3.12",
@@ -221,7 +221,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742047269998-2025-03-15T14:01:09.998Z/bodybuildr-backend-infrastructure.zip"
+          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742048085306-2025-03-15T14:14:45.306Z/bodybuildr-backend-infrastructure.zip"
         },
         "Handler": "src/handlers/plan_handler.create_plan",
         "Runtime": "python3.12",
@@ -266,7 +266,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742047269998-2025-03-15T14:01:09.998Z/bodybuildr-backend-infrastructure.zip"
+          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742048085306-2025-03-15T14:14:45.306Z/bodybuildr-backend-infrastructure.zip"
         },
         "Handler": "src/handlers/plan_handler.save_plan",
         "Runtime": "python3.12",
@@ -311,7 +311,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742047269998-2025-03-15T14:01:09.998Z/bodybuildr-backend-infrastructure.zip"
+          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742048085306-2025-03-15T14:14:45.306Z/bodybuildr-backend-infrastructure.zip"
         },
         "Handler": "src/handlers/plan_handler.list_plans",
         "Runtime": "python3.12",
@@ -356,7 +356,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742047269998-2025-03-15T14:01:09.998Z/bodybuildr-backend-infrastructure.zip"
+          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742048085306-2025-03-15T14:14:45.306Z/bodybuildr-backend-infrastructure.zip"
         },
         "Handler": "src/handlers/user_handler.create_user",
         "Runtime": "python3.12",
@@ -401,7 +401,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742047269998-2025-03-15T14:01:09.998Z/bodybuildr-backend-infrastructure.zip"
+          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742048085306-2025-03-15T14:14:45.306Z/bodybuildr-backend-infrastructure.zip"
         },
         "Handler": "src/handlers/user_handler.update_user",
         "Runtime": "python3.12",
@@ -446,7 +446,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742047269998-2025-03-15T14:01:09.998Z/bodybuildr-backend-infrastructure.zip"
+          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742048085306-2025-03-15T14:14:45.306Z/bodybuildr-backend-infrastructure.zip"
         },
         "Handler": "src/handlers/user_handler.get_user",
         "Runtime": "python3.12",
@@ -491,7 +491,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742047269998-2025-03-15T14:01:09.998Z/bodybuildr-backend-infrastructure.zip"
+          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742048085306-2025-03-15T14:14:45.306Z/bodybuildr-backend-infrastructure.zip"
         },
         "Handler": "src/handlers/progress_handler.update_progress",
         "Runtime": "python3.12",
@@ -536,7 +536,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742047269998-2025-03-15T14:01:09.998Z/bodybuildr-backend-infrastructure.zip"
+          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742048085306-2025-03-15T14:14:45.306Z/bodybuildr-backend-infrastructure.zip"
         },
         "Handler": "src/handlers/progress_handler.get_progress",
         "Runtime": "python3.12",
@@ -581,7 +581,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742047269998-2025-03-15T14:01:09.998Z/bodybuildr-backend-infrastructure.zip"
+          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742048085306-2025-03-15T14:14:45.306Z/bodybuildr-backend-infrastructure.zip"
         },
         "Handler": "src/handlers/plan_handler.get_plan_versions",
         "Runtime": "python3.12",
@@ -626,7 +626,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742047269998-2025-03-15T14:01:09.998Z/bodybuildr-backend-infrastructure.zip"
+          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742048085306-2025-03-15T14:14:45.306Z/bodybuildr-backend-infrastructure.zip"
         },
         "Handler": "src/handlers/chat_handler.chat_with_coach",
         "Runtime": "python3.12",
@@ -671,7 +671,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742047269998-2025-03-15T14:01:09.998Z/bodybuildr-backend-infrastructure.zip"
+          "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742048085306-2025-03-15T14:14:45.306Z/bodybuildr-backend-infrastructure.zip"
         },
         "Handler": "src/handlers/chat_handler.get_chat_history",
         "Runtime": "python3.12",
@@ -2017,7 +2017,7 @@
         "Type": "TOKEN"
       }
     },
-    "ApiGatewayDeployment1742047243700": {
+    "ApiGatewayDeployment1742048073610": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {

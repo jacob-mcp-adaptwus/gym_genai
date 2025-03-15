@@ -10,6 +10,7 @@ def create_plan(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """
     Handler for creating a new bodybuilding plan
     """
+    print(event)
     try:
         # Validate request body
         body = json.loads(event.get('body', '{}'))
