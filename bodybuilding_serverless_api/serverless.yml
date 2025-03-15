@@ -1,4 +1,4 @@
-org: bodybuildr
+# org: bodybuildr
 service: bodybuildr-backend-infrastructure
 
 provider:
@@ -80,14 +80,14 @@ custom:
         - arn:aws:bedrock:*:*:*
 
   pythonRequirements:
-    dockerizePip: ${file(config.${opt:stage, 'dev'}.json):dockerizePip, true}
+    dockerizePip: false
     requirementsFile: requirements.txt
     noDeploy: ${file(excludes/python-packages.json):noDeploy}
     patterns: ${file(excludes/python-patterns.json):patterns}
 
 functions:
   authorize:
-    handler: src/auth.authorizer
+    handler: src/handlers/auth_handler.authorizer
     timeout: 5
     memorySize: 128
 
