@@ -17,6 +17,7 @@ build/
 # Serverless directories
 .serverless/
 node_modules/
+package/
 
 # Local development settings
 .env.local
@@ -36,3 +37,7 @@ Thumbs.db
 
 # Logs
 *.log 
+
+# Python package directories
+*/package/
+bodybuilding_serverless_api/package/ 
