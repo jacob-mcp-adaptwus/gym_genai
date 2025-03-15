@@ -12,6 +12,11 @@ const MainRoutes = {
       component: () => import('@/views/apps/lessons/MyLessons.vue')
     },
     {
+      name: 'My Plans',
+      path: '/plans/myplans',
+      component: () => import('@/views/apps/plans/MyPlans.vue')
+    },
+    {
       name: 'My Profiles',
       path: '/profiles/myprofiles',
       component: () => import('@/views/apps/profiles/MyProfiles.vue')

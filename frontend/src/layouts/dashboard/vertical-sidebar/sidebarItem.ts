@@ -22,8 +22,8 @@ const sidebarItem: menu[] = [
     to: '/dashboard/default',
     children: [
       {
-        title: 'My Lessons',
-        to: '/lessons/mylesson'
+        title: 'My Plans',
+        to: '/plans/myplans'
       }
     ]
   },

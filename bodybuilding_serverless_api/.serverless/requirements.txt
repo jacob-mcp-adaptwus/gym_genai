@@ -1,6 +1,5 @@
-anthropic>=0.5.0
-aws-lambda-powertools>=2.26.0
-pydantic>=2.4.0
-python-dotenv>=1.0.0
-python-jose>=3.3.0
-requests>=2.31.0
+cryptography>=42.0.0  # Required for JWT RSA verification
+pyjwt[crypto]>=2.9.0
+python-dateutil>=2.9.0
+pytz>=2024.2
+requests>=2.32.3

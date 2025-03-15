@@ -4,6 +4,10 @@ globs:
 alwaysApply: true
 ---
  # Bodybuilding API File Paths
+[API_DOCUMENTATION.md](mdc:bodybuilding_serverless_api/API_DOCUMENTATION.md) is the documentation for the new bodybuilding api
+[auth.ts](mdc:frontend/src/stores/auth.ts) handles cognito auth
+
+[MyLessons.vue](mdc:frontend/src/views/apps/lessons/MyLessons.vue) is the primary UI for lod lesson app. i want to replicate this starting with the create plan endpoint
 
 ## Core Files
 bodybuilding.json

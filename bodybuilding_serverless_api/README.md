@@ -26,6 +26,42 @@ bodybuilding_serverless_api/
 └── config files       # Configuration files
 ```
 
+## Deployment
+
+### Current Deployment
+
+The API is currently deployed to the development environment:
+
+- **Base URL**: `https://jpn7bdhehi.execute-api.us-east-1.amazonaws.com/dev`
+- **Service**: bodybuildr-backend-infrastructure
+- **Stage**: dev
+- **Region**: us-east-1
+- **Stack**: bodybuildr-backend-infrastructure-dev
+
+For detailed API documentation, see [API_DOCUMENTATION.md](./API_DOCUMENTATION.md).
+
+### Deployment Instructions
+
+1. Install dependencies:
+```bash
+npm install -g serverless
+pip install -r requirements.txt
+```
+
+2. Configure AWS credentials:
+```bash
+serverless config credentials --provider aws --key YOUR_KEY --secret YOUR_SECRET
+```
+
+3. Deploy:
+```bash
+# Deploy to development environment
+serverless deploy --stage dev
+
+# Deploy to production environment
+serverless deploy --stage prod
+```
+
 ## Documentation
 
 Detailed documentation is available in the `docs` directory:

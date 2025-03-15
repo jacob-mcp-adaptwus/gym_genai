@@ -1,17 +1,16 @@
 """Cognito JWT Authorizer for API Gateway"""
 import json
 import os
-import time
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 import jwt
 import requests
 
 try:
     from src.utils.loggers.applogger import AppLogger
-    from src.aws.secrets_manager import SecretsManager
+    from src.utils.secrets.secretmanager import SecretManager
 except ImportError:
     from utils.loggers.applogger import AppLogger
-    from aws.secrets_manager import SecretsManager
+    from utils.secrets.secretmanager import SecretManager
 
 LOGGER = AppLogger(__name__)
 
@@ -19,7 +18,7 @@ class CognitoJwtValidator:
     """Handles validation of Cognito JWT tokens"""
     
     def __init__(self):
-        secrets = SecretsManager().get_secret(os.environ['COGNITO'])
+        secrets = SecretManager().get(os.environ['COGNITO'])
         self.app_client_id = secrets['COGNITO_CLIENT_ID']
         self.user_pool_id = secrets['COGNITO_USER_POOL']
         self.region = secrets['COGNITO_REGION']
@@ -44,12 +43,6 @@ class CognitoJwtValidator:
         raise ValueError('No matching key found')
 
     def validate_token(self, token: str, token_type: str = 'id') -> Dict[str, Any]:
-        """Validate the JWT token and return the claims
-        
-        Args:
-            token: The JWT token to validate
-            token_type: Either 'id' or 'access' to specify token type
-        """
         try:
             # First decode without verification to get the kid
             headers = jwt.get_unverified_header(token)
@@ -79,23 +72,15 @@ class CognitoJwtValidator:
             )
 
             return claims
-
-        except jwt.ExpiredSignatureError:
-            LOGGER.error('Token has expired')
-            raise
-        except jwt.InvalidTokenError as e:
-            LOGGER.error(f'Invalid token: {str(e)}')
-            raise
         except Exception as e:
             LOGGER.error(f'Error validating token: {str(e)}')
             raise
 
 
-def generate_policy(principal_id, effect, method_arn, claims=None):
-    """Generate IAM policy for API Gateway"""
+def generate_policy(principal_id, effect, method_arn):
+    """generate iam policy"""
     auth_response = {}
     auth_response['principalId'] = principal_id
-    
     if effect and method_arn:
         policy_document = {
             'Version': '2012-10-17',
@@ -109,16 +94,6 @@ def generate_policy(principal_id, effect, method_arn, claims=None):
             ]
         }
         auth_response['policyDocument'] = policy_document
-    
-    # Add claims to context if available
-    if claims:
-        context = {
-            'sub': claims.get('sub', ''),
-            'email': claims.get('email', ''),
-            'username': claims.get('cognito:username', '')
-        }
-        auth_response['context'] = context
-    
     return auth_response
 
 def authorizer(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
@@ -156,12 +131,12 @@ def authorizer(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         if error:
             raise error
 
-        # Use sub (user ID) as principal ID for bodybuilding app
-        principal_id = claims.get('sub', '')
+        # Use username or email as principal ID
+        principal_id = claims.get('email', claims.get('username', claims.get('cognito:username', '')))
         
-        # Generate IAM policy with claims in context
-        policy = generate_policy(principal_id, 'Allow', event['methodArn'], claims)
-        LOGGER.info("Generated policy: %s", json.dumps(policy))
+        # Generate IAM policy
+        policy = generate_policy(principal_id, 'Allow', event['methodArn'])
+        LOGGER.info("Generated policy: %s", json.dumps(policy))  # Single log
         return policy
 
     except (jwt.ExpiredSignatureError, jwt.InvalidTokenError) as e:
@@ -170,4 +145,4 @@ def authorizer(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     
     except Exception as e:
         LOGGER.error(f"Authorization failed: {str(e)}")
-        return generate_policy('unauthorized', 'Deny', event['methodArn']) 
+        return generate_policy('unauthorized', 'Deny', event['methodArn'])
