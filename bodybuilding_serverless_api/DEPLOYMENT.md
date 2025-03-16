@@ -14,7 +14,7 @@ https://jpn7bdhehi.execute-api.us-east-1.amazonaws.com/dev
 - **Stage**: dev
 - **Region**: us-east-1
 - **Stack**: bodybuildr-backend-infrastructure-dev
-- **Deployment Date**: May 15, 2024
+- **Deployment Date**: May 16, 2024
 
 ## API Endpoints
 

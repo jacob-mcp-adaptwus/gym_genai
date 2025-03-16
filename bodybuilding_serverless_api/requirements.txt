@@ -5,3 +5,4 @@ requests>=2.32.3
 python-dateutil>=2.9.0
 pytz>=2024.2
 cryptography>=42.0.0  # Required for JWT RSA verification
+jsonschema>=4.20.0  # Required for request validation

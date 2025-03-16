@@ -121,6 +121,12 @@
               "LogGroupName": "/aws/lambda/bodybuildr-backend-infrastructure-dev-getUser"
             }
           },
+          "DebugEnvironmentLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/bodybuildr-backend-infrastructure-dev-debugEnvironment"
+            }
+          },
           "UpdateProgressLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
@@ -234,7 +240,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742061194696-2025-03-15T17:53:14.696Z/bodybuildr-backend-infrastructure.zip"
+                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742091591609-2025-03-16T02:19:51.609Z/bodybuildr-backend-infrastructure.zip"
               },
               "Handler": "src/auth.authorizer",
               "Runtime": "python3.12",
@@ -279,9 +285,9 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742061194696-2025-03-15T17:53:14.696Z/bodybuildr-backend-infrastructure.zip"
+                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742091591609-2025-03-16T02:19:51.609Z/bodybuildr-backend-infrastructure.zip"
               },
-              "Handler": "src/handlers/plan_handler.create_plan",
+              "Handler": "src/plan_handler.create_plan_handler",
               "Runtime": "python3.12",
               "FunctionName": "bodybuildr-backend-infrastructure-dev-createPlan",
               "MemorySize": 256,
@@ -324,9 +330,9 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742061194696-2025-03-15T17:53:14.696Z/bodybuildr-backend-infrastructure.zip"
+                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742091591609-2025-03-16T02:19:51.609Z/bodybuildr-backend-infrastructure.zip"
               },
-              "Handler": "src/handlers/plan_handler.save_plan",
+              "Handler": "src/plan_handler.save_plan_handler",
               "Runtime": "python3.12",
               "FunctionName": "bodybuildr-backend-infrastructure-dev-savePlan",
               "MemorySize": 256,
@@ -369,9 +375,9 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742061194696-2025-03-15T17:53:14.696Z/bodybuildr-backend-infrastructure.zip"
+                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742091591609-2025-03-16T02:19:51.609Z/bodybuildr-backend-infrastructure.zip"
               },
-              "Handler": "src/handlers/plan_handler.list_plans",
+              "Handler": "src/plan_handler.list_plans_handler",
               "Runtime": "python3.12",
               "FunctionName": "bodybuildr-backend-infrastructure-dev-listPlans",
               "MemorySize": 256,
@@ -414,9 +420,9 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742061194696-2025-03-15T17:53:14.696Z/bodybuildr-backend-infrastructure.zip"
+                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742091591609-2025-03-16T02:19:51.609Z/bodybuildr-backend-infrastructure.zip"
               },
-              "Handler": "src/handlers/user_handler.create_user",
+              "Handler": "src/user_handler.create_user",
               "Runtime": "python3.12",
               "FunctionName": "bodybuildr-backend-infrastructure-dev-createUser",
               "MemorySize": 256,
@@ -459,9 +465,9 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742061194696-2025-03-15T17:53:14.696Z/bodybuildr-backend-infrastructure.zip"
+                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742091591609-2025-03-16T02:19:51.609Z/bodybuildr-backend-infrastructure.zip"
               },
-              "Handler": "src/handlers/user_handler.update_user",
+              "Handler": "src/user_handler.update_user",
               "Runtime": "python3.12",
               "FunctionName": "bodybuildr-backend-infrastructure-dev-updateUser",
               "MemorySize": 256,
@@ -504,9 +510,9 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742061194696-2025-03-15T17:53:14.696Z/bodybuildr-backend-infrastructure.zip"
+                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742091591609-2025-03-16T02:19:51.609Z/bodybuildr-backend-infrastructure.zip"
               },
-              "Handler": "src/handlers/user_handler.get_user",
+              "Handler": "src/user_handler.get_user",
               "Runtime": "python3.12",
               "FunctionName": "bodybuildr-backend-infrastructure-dev-getUser",
               "MemorySize": 256,
@@ -544,14 +550,59 @@
               "GetUserLogGroup"
             ]
           },
+          "DebugEnvironmentLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
+                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742091591609-2025-03-16T02:19:51.609Z/bodybuildr-backend-infrastructure.zip"
+              },
+              "Handler": "src/handlers/debug_handler.debug_environment",
+              "Runtime": "python3.12",
+              "FunctionName": "bodybuildr-backend-infrastructure-dev-debugEnvironment",
+              "MemorySize": 256,
+              "Timeout": 68,
+              "Tags": [
+                {
+                  "Key": "Environment",
+                  "Value": "dev"
+                },
+                {
+                  "Key": "Project",
+                  "Value": "bodybuildr"
+                }
+              ],
+              "Environment": {
+                "Variables": {
+                  "FILES_BUCKET": "bodybuildr-files-dev",
+                  "PLANS_TABLE": "bodybuildr-plans-table-dev",
+                  "PLAN_VERSIONS_TABLE": "bodybuildr-planversions-dev",
+                  "USERS_TABLE": "bodybuildr-users-table-dev",
+                  "COGNITO": "cognito-dev",
+                  "CHAT_HISTORY_TABLE": "bodybuildr-chat-history-dev",
+                  "PROGRESS_TABLE": "bodybuildr-progress-dev",
+                  "STAGE": "dev"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "DebugEnvironmentLogGroup"
+            ]
+          },
           "UpdateProgressLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742061194696-2025-03-15T17:53:14.696Z/bodybuildr-backend-infrastructure.zip"
+                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742091591609-2025-03-16T02:19:51.609Z/bodybuildr-backend-infrastructure.zip"
               },
-              "Handler": "src/handlers/progress_handler.update_progress",
+              "Handler": "src/progress_handler.update_progress",
               "Runtime": "python3.12",
               "FunctionName": "bodybuildr-backend-infrastructure-dev-updateProgress",
               "MemorySize": 256,
@@ -594,9 +645,9 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742061194696-2025-03-15T17:53:14.696Z/bodybuildr-backend-infrastructure.zip"
+                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742091591609-2025-03-16T02:19:51.609Z/bodybuildr-backend-infrastructure.zip"
               },
-              "Handler": "src/handlers/progress_handler.get_progress",
+              "Handler": "src/progress_handler.get_progress",
               "Runtime": "python3.12",
               "FunctionName": "bodybuildr-backend-infrastructure-dev-getProgress",
               "MemorySize": 256,
@@ -639,9 +690,9 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742061194696-2025-03-15T17:53:14.696Z/bodybuildr-backend-infrastructure.zip"
+                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742091591609-2025-03-16T02:19:51.609Z/bodybuildr-backend-infrastructure.zip"
               },
-              "Handler": "src/handlers/plan_handler.get_plan_versions",
+              "Handler": "src/plan_handler.get_plan_versions_handler",
               "Runtime": "python3.12",
               "FunctionName": "bodybuildr-backend-infrastructure-dev-getPlanVersions",
               "MemorySize": 256,
@@ -684,9 +735,9 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742061194696-2025-03-15T17:53:14.696Z/bodybuildr-backend-infrastructure.zip"
+                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742091591609-2025-03-16T02:19:51.609Z/bodybuildr-backend-infrastructure.zip"
               },
-              "Handler": "src/handlers/chat_handler.chat_with_coach",
+              "Handler": "src/chat_handler.chat_with_coach",
               "Runtime": "python3.12",
               "FunctionName": "bodybuildr-backend-infrastructure-dev-chatWithCoach",
               "MemorySize": 256,
@@ -729,9 +780,9 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-cfd30ff4-8aeb",
-                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742061194696-2025-03-15T17:53:14.696Z/bodybuildr-backend-infrastructure.zip"
+                "S3Key": "serverless/bodybuildr-backend-infrastructure/dev/1742091591609-2025-03-16T02:19:51.609Z/bodybuildr-backend-infrastructure.zip"
               },
-              "Handler": "src/handlers/chat_handler.get_chat_history",
+              "Handler": "src/chat_handler.get_chat_history",
               "Runtime": "python3.12",
               "FunctionName": "bodybuildr-backend-infrastructure-dev-getChatHistory",
               "MemorySize": 256,
@@ -769,124 +820,134 @@
               "GetChatHistoryLogGroup"
             ]
           },
-          "AuthorizeLambdaVersionO1DCQNRobQpA8D7HJsyvjpBXGYCTqQYZSOJsMbvRZE": {
+          "AuthorizeLambdaVersionqyxyM5lSOqtuf1qB7MUXvDjeVVjOuSN2HNyeXaU5waQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AuthorizeLambdaFunction"
               },
-              "CodeSha256": "bPD10spbFJHwiZXIznGOa/TZgg1xEnaZFEgbndJSbxk="
+              "CodeSha256": "FV2+zoIhg5V40kaPDCSLESWijWLbHDsU4W2yJT8OKJU="
             }
           },
-          "CreatePlanLambdaVersionKEV0hTaayG68WZ0oah9mgUQPVAE2tmdYzOndb9A7psc": {
+          "CreatePlanLambdaVersion7uhHZ6if4OcMm4TKn7OgwCvddmCSZcHdpf1HIbYAn0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreatePlanLambdaFunction"
               },
-              "CodeSha256": "bPD10spbFJHwiZXIznGOa/TZgg1xEnaZFEgbndJSbxk="
+              "CodeSha256": "FV2+zoIhg5V40kaPDCSLESWijWLbHDsU4W2yJT8OKJU="
             }
           },
-          "SavePlanLambdaVersionsuhGMTWs4SFhvQpK7VVQbXIW1jp2UMjYKaiTqNc7FI": {
+          "SavePlanLambdaVersion1Djli3eYfDXqPAJBlJOhFWlMLTbe5oWXiMVBwHk4B7k": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "SavePlanLambdaFunction"
               },
-              "CodeSha256": "bPD10spbFJHwiZXIznGOa/TZgg1xEnaZFEgbndJSbxk="
+              "CodeSha256": "FV2+zoIhg5V40kaPDCSLESWijWLbHDsU4W2yJT8OKJU="
             }
           },
-          "ListPlansLambdaVersionRu839dWbQ55A2JKaJD4LoaX8s6k9ff9CjDyx54C7Ls": {
+          "ListPlansLambdaVersionwvWDqJ9neke4g0nbaAnHRh4vAviEqBSs8BdNvd4p4I0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ListPlansLambdaFunction"
               },
-              "CodeSha256": "bPD10spbFJHwiZXIznGOa/TZgg1xEnaZFEgbndJSbxk="
+              "CodeSha256": "FV2+zoIhg5V40kaPDCSLESWijWLbHDsU4W2yJT8OKJU="
             }
           },
-          "CreateUserLambdaVersioncG5Lv0J3vlDwS27J0ZvXXCdM6USlQfEC8qGbcUFHks": {
+          "CreateUserLambdaVersionQQ8oO52NKYbFNFa2zEYPpXy1PX3rwc2Th7ibaUgmro": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateUserLambdaFunction"
               },
-              "CodeSha256": "bPD10spbFJHwiZXIznGOa/TZgg1xEnaZFEgbndJSbxk="
+              "CodeSha256": "FV2+zoIhg5V40kaPDCSLESWijWLbHDsU4W2yJT8OKJU="
             }
           },
-          "UpdateUserLambdaVersion1y9rxz3Ew6bx9vEATZ6Gaxxpm8QZb8LYaMPhkiWpI8": {
+          "UpdateUserLambdaVersionmWGVVZNmhnI2AQcYmhd8bKDcG4QOy67cXeuMMEC8o": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateUserLambdaFunction"
               },
-              "CodeSha256": "bPD10spbFJHwiZXIznGOa/TZgg1xEnaZFEgbndJSbxk="
+              "CodeSha256": "FV2+zoIhg5V40kaPDCSLESWijWLbHDsU4W2yJT8OKJU="
             }
           },
-          "GetUserLambdaVersionFFIZHY8gNyPLXuJ7T5EDUAWxJazxBNR4wVkNObVXsb0": {
+          "GetUserLambdaVersiontZD1DdHTbLJvpDYSDyYS1NPnadpDnqaMAF6OzbLJ7IQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetUserLambdaFunction"
               },
-              "CodeSha256": "bPD10spbFJHwiZXIznGOa/TZgg1xEnaZFEgbndJSbxk="
+              "CodeSha256": "FV2+zoIhg5V40kaPDCSLESWijWLbHDsU4W2yJT8OKJU="
             }
           },
-          "UpdateProgressLambdaVersionNFmHx4HubxEa8jItjj5K8q2vd7NPNlXEP64befYFY8": {
+          "DebugEnvironmentLambdaVersion7mGetAyqhLMlN0vF2qRkoCTXoAcD2RdtNJT5D7O8k": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DebugEnvironmentLambdaFunction"
+              },
+              "CodeSha256": "FV2+zoIhg5V40kaPDCSLESWijWLbHDsU4W2yJT8OKJU="
+            }
+          },
+          "UpdateProgressLambdaVersionATDTr3uf4tax3v5Pbxlez7uevjyxT52f1A5BJymw8k": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateProgressLambdaFunction"
               },
-              "CodeSha256": "bPD10spbFJHwiZXIznGOa/TZgg1xEnaZFEgbndJSbxk="
+              "CodeSha256": "FV2+zoIhg5V40kaPDCSLESWijWLbHDsU4W2yJT8OKJU="
             }
           },
-          "GetProgressLambdaVersionaakrYGDD4zHgZEyofGdEqUphtCymlxURPyPdLqy3b0": {
+          "GetProgressLambdaVersionIBIeTMiexiEzTi05Gz4qEErCZBMPoRNJWVxdZbUcmI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetProgressLambdaFunction"
               },
-              "CodeSha256": "bPD10spbFJHwiZXIznGOa/TZgg1xEnaZFEgbndJSbxk="
+              "CodeSha256": "FV2+zoIhg5V40kaPDCSLESWijWLbHDsU4W2yJT8OKJU="
             }
           },
-          "GetPlanVersionsLambdaVersionVZhKGIz1wUJMbJzuGwRs488QV43ZVf7siSt001ch0w": {
+          "GetPlanVersionsLambdaVersionzgbr6tXybd7e2mpxG1A1FwuEFoTF78elbJdJZIBA4g": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetPlanVersionsLambdaFunction"
               },
-              "CodeSha256": "bPD10spbFJHwiZXIznGOa/TZgg1xEnaZFEgbndJSbxk="
+              "CodeSha256": "FV2+zoIhg5V40kaPDCSLESWijWLbHDsU4W2yJT8OKJU="
             }
           },
-          "ChatWithCoachLambdaVersionDGMwadJ09DCS0yBFx5TXGjfNL3xk8TnYXpXmY0UWVg": {
+          "ChatWithCoachLambdaVersion4maJrgPinvpTHHikKIsWw7EFd0YovZ6lrdTqqNWpOk": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ChatWithCoachLambdaFunction"
               },
-              "CodeSha256": "bPD10spbFJHwiZXIznGOa/TZgg1xEnaZFEgbndJSbxk="
+              "CodeSha256": "FV2+zoIhg5V40kaPDCSLESWijWLbHDsU4W2yJT8OKJU="
             }
           },
-          "GetChatHistoryLambdaVersion0lYOY9MdJWi9eeuvDvqnxTp7PegbiuK15q41G4Z8kw": {
+          "GetChatHistoryLambdaVersion8L2RjTjx5emWzx49pTMLA8xfuZ90DcOfjZzL915ebng": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetChatHistoryLambdaFunction"
               },
-              "CodeSha256": "bPD10spbFJHwiZXIznGOa/TZgg1xEnaZFEgbndJSbxk="
+              "CodeSha256": "FV2+zoIhg5V40kaPDCSLESWijWLbHDsU4W2yJT8OKJU="
             }
           },
           "ApiGatewayRestApi": {
@@ -1053,6 +1114,33 @@
                 "Ref": "ApiGatewayResourceUsers"
               },
               "PathPart": "{userId}",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceDebug": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "debug",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceDebugEnvironment": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceDebug"
+              },
+              "PathPart": "environment",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -1304,6 +1392,51 @@
               },
               "ResourceId": {
                 "Ref": "ApiGatewayResourceUsersUseridVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodDebugEnvironmentOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceDebugEnvironment"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -1790,6 +1923,53 @@
               "AuthorizeApiGatewayAuthorizer"
             ]
           },
+          "ApiGatewayMethodDebugEnvironmentGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceDebugEnvironment"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "TimeoutInMillis": 69000,
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "DebugEnvironmentLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "DebugEnvironmentLambdaPermissionApiGateway"
+            ]
+          },
           "ApiGatewayMethodProgressUseridVarPost": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
@@ -2075,7 +2255,7 @@
               "Type": "TOKEN"
             }
           },
-          "ApiGatewayDeployment1742061181439": {
+          "ApiGatewayDeployment1742091573600": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -2089,6 +2269,7 @@
               "ApiGatewayMethodPlansListOptions",
               "ApiGatewayMethodUsersCreateOptions",
               "ApiGatewayMethodUsersUseridVarOptions",
+              "ApiGatewayMethodDebugEnvironmentOptions",
               "ApiGatewayMethodProgressUseridVarOptions",
               "ApiGatewayMethodPlansVersionsPlanidVarOptions",
               "ApiGatewayMethodPlansChatOptions",
@@ -2099,6 +2280,7 @@
               "ApiGatewayMethodUsersCreatePost",
               "ApiGatewayMethodUsersUseridVarPut",
               "ApiGatewayMethodUsersUseridVarGet",
+              "ApiGatewayMethodDebugEnvironmentGet",
               "ApiGatewayMethodProgressUseridVarPost",
               "ApiGatewayMethodProgressUseridVarGet",
               "ApiGatewayMethodPlansVersionsPlanidVarGet",
@@ -2334,6 +2516,43 @@
               "FunctionName": {
                 "Fn::GetAtt": [
                   "GetUserLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "DebugEnvironmentLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "DebugEnvironmentLambdaFunction",
                   "Arn"
                 ]
               },
@@ -2751,7 +2970,7 @@
           "AuthorizeLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AuthorizeLambdaVersionO1DCQNRobQpA8D7HJsyvjpBXGYCTqQYZSOJsMbvRZE"
+              "Ref": "AuthorizeLambdaVersionqyxyM5lSOqtuf1qB7MUXvDjeVVjOuSN2HNyeXaU5waQ"
             },
             "Export": {
               "Name": "sls-bodybuildr-backend-infrastructure-dev-AuthorizeLambdaFunctionQualifiedArn"
@@ -2760,7 +2979,7 @@
           "CreatePlanLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreatePlanLambdaVersionKEV0hTaayG68WZ0oah9mgUQPVAE2tmdYzOndb9A7psc"
+              "Ref": "CreatePlanLambdaVersion7uhHZ6if4OcMm4TKn7OgwCvddmCSZcHdpf1HIbYAn0"
             },
             "Export": {
               "Name": "sls-bodybuildr-backend-infrastructure-dev-CreatePlanLambdaFunctionQualifiedArn"
@@ -2769,7 +2988,7 @@
           "SavePlanLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "SavePlanLambdaVersionsuhGMTWs4SFhvQpK7VVQbXIW1jp2UMjYKaiTqNc7FI"
+              "Ref": "SavePlanLambdaVersion1Djli3eYfDXqPAJBlJOhFWlMLTbe5oWXiMVBwHk4B7k"
             },
             "Export": {
               "Name": "sls-bodybuildr-backend-infrastructure-dev-SavePlanLambdaFunctionQualifiedArn"
@@ -2778,7 +2997,7 @@
           "ListPlansLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ListPlansLambdaVersionRu839dWbQ55A2JKaJD4LoaX8s6k9ff9CjDyx54C7Ls"
+              "Ref": "ListPlansLambdaVersionwvWDqJ9neke4g0nbaAnHRh4vAviEqBSs8BdNvd4p4I0"
             },
             "Export": {
               "Name": "sls-bodybuildr-backend-infrastructure-dev-ListPlansLambdaFunctionQualifiedArn"
@@ -2787,7 +3006,7 @@
           "CreateUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateUserLambdaVersioncG5Lv0J3vlDwS27J0ZvXXCdM6USlQfEC8qGbcUFHks"
+              "Ref": "CreateUserLambdaVersionQQ8oO52NKYbFNFa2zEYPpXy1PX3rwc2Th7ibaUgmro"
             },
             "Export": {
               "Name": "sls-bodybuildr-backend-infrastructure-dev-CreateUserLambdaFunctionQualifiedArn"
@@ -2796,7 +3015,7 @@
           "UpdateUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateUserLambdaVersion1y9rxz3Ew6bx9vEATZ6Gaxxpm8QZb8LYaMPhkiWpI8"
+              "Ref": "UpdateUserLambdaVersionmWGVVZNmhnI2AQcYmhd8bKDcG4QOy67cXeuMMEC8o"
             },
             "Export": {
               "Name": "sls-bodybuildr-backend-infrastructure-dev-UpdateUserLambdaFunctionQualifiedArn"
@@ -2805,16 +3024,25 @@
           "GetUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetUserLambdaVersionFFIZHY8gNyPLXuJ7T5EDUAWxJazxBNR4wVkNObVXsb0"
+              "Ref": "GetUserLambdaVersiontZD1DdHTbLJvpDYSDyYS1NPnadpDnqaMAF6OzbLJ7IQ"
             },
             "Export": {
               "Name": "sls-bodybuildr-backend-infrastructure-dev-GetUserLambdaFunctionQualifiedArn"
             }
           },
+          "DebugEnvironmentLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DebugEnvironmentLambdaVersion7mGetAyqhLMlN0vF2qRkoCTXoAcD2RdtNJT5D7O8k"
+            },
+            "Export": {
+              "Name": "sls-bodybuildr-backend-infrastructure-dev-DebugEnvironmentLambdaFunctionQualifiedArn"
+            }
+          },
           "UpdateProgressLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateProgressLambdaVersionNFmHx4HubxEa8jItjj5K8q2vd7NPNlXEP64befYFY8"
+              "Ref": "UpdateProgressLambdaVersionATDTr3uf4tax3v5Pbxlez7uevjyxT52f1A5BJymw8k"
             },
             "Export": {
               "Name": "sls-bodybuildr-backend-infrastructure-dev-UpdateProgressLambdaFunctionQualifiedArn"
@@ -2823,7 +3051,7 @@
           "GetProgressLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetProgressLambdaVersionaakrYGDD4zHgZEyofGdEqUphtCymlxURPyPdLqy3b0"
+              "Ref": "GetProgressLambdaVersionIBIeTMiexiEzTi05Gz4qEErCZBMPoRNJWVxdZbUcmI"
             },
             "Export": {
               "Name": "sls-bodybuildr-backend-infrastructure-dev-GetProgressLambdaFunctionQualifiedArn"
@@ -2832,7 +3060,7 @@
           "GetPlanVersionsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetPlanVersionsLambdaVersionVZhKGIz1wUJMbJzuGwRs488QV43ZVf7siSt001ch0w"
+              "Ref": "GetPlanVersionsLambdaVersionzgbr6tXybd7e2mpxG1A1FwuEFoTF78elbJdJZIBA4g"
             },
             "Export": {
               "Name": "sls-bodybuildr-backend-infrastructure-dev-GetPlanVersionsLambdaFunctionQualifiedArn"
@@ -2841,7 +3069,7 @@
           "ChatWithCoachLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ChatWithCoachLambdaVersionDGMwadJ09DCS0yBFx5TXGjfNL3xk8TnYXpXmY0UWVg"
+              "Ref": "ChatWithCoachLambdaVersion4maJrgPinvpTHHikKIsWw7EFd0YovZ6lrdTqqNWpOk"
             },
             "Export": {
               "Name": "sls-bodybuildr-backend-infrastructure-dev-ChatWithCoachLambdaFunctionQualifiedArn"
@@ -2850,7 +3078,7 @@
           "GetChatHistoryLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetChatHistoryLambdaVersion0lYOY9MdJWi9eeuvDvqnxTp7PegbiuK15q41G4Z8kw"
+              "Ref": "GetChatHistoryLambdaVersion8L2RjTjx5emWzx49pTMLA8xfuZ90DcOfjZzL915ebng"
             },
             "Export": {
               "Name": "sls-bodybuildr-backend-infrastructure-dev-GetChatHistoryLambdaFunctionQualifiedArn"
@@ -3051,10 +3279,10 @@
         "memory": 128,
         "runtime": "python3.12",
         "vpc": {},
-        "versionLogicalId": "AuthorizeLambdaVersionO1DCQNRobQpA8D7HJsyvjpBXGYCTqQYZSOJsMbvRZE"
+        "versionLogicalId": "AuthorizeLambdaVersionqyxyM5lSOqtuf1qB7MUXvDjeVVjOuSN2HNyeXaU5waQ"
       },
       "createPlan": {
-        "handler": "src/handlers/plan_handler.create_plan",
+        "handler": "src/plan_handler.create_plan_handler",
         "timeout": 65,
         "events": [
           {
@@ -3098,10 +3326,10 @@
         "memory": 256,
         "runtime": "python3.12",
         "vpc": {},
-        "versionLogicalId": "CreatePlanLambdaVersionKEV0hTaayG68WZ0oah9mgUQPVAE2tmdYzOndb9A7psc"
+        "versionLogicalId": "CreatePlanLambdaVersion7uhHZ6if4OcMm4TKn7OgwCvddmCSZcHdpf1HIbYAn0"
       },
       "savePlan": {
-        "handler": "src/handlers/plan_handler.save_plan",
+        "handler": "src/plan_handler.save_plan_handler",
         "events": [
           {
             "http": {
@@ -3145,10 +3373,10 @@
         "timeout": 68,
         "runtime": "python3.12",
         "vpc": {},
-        "versionLogicalId": "SavePlanLambdaVersionsuhGMTWs4SFhvQpK7VVQbXIW1jp2UMjYKaiTqNc7FI"
+        "versionLogicalId": "SavePlanLambdaVersion1Djli3eYfDXqPAJBlJOhFWlMLTbe5oWXiMVBwHk4B7k"
       },
       "listPlans": {
-        "handler": "src/handlers/plan_handler.list_plans",
+        "handler": "src/plan_handler.list_plans_handler",
         "events": [
           {
             "http": {
@@ -3192,10 +3420,10 @@
         "timeout": 68,
         "runtime": "python3.12",
         "vpc": {},
-        "versionLogicalId": "ListPlansLambdaVersionRu839dWbQ55A2JKaJD4LoaX8s6k9ff9CjDyx54C7Ls"
+        "versionLogicalId": "ListPlansLambdaVersionwvWDqJ9neke4g0nbaAnHRh4vAviEqBSs8BdNvd4p4I0"
       },
       "createUser": {
-        "handler": "src/handlers/user_handler.create_user",
+        "handler": "src/user_handler.create_user",
         "events": [
           {
             "http": {
@@ -3239,10 +3467,10 @@
         "timeout": 68,
         "runtime": "python3.12",
         "vpc": {},
-        "versionLogicalId": "CreateUserLambdaVersioncG5Lv0J3vlDwS27J0ZvXXCdM6USlQfEC8qGbcUFHks"
+        "versionLogicalId": "CreateUserLambdaVersionQQ8oO52NKYbFNFa2zEYPpXy1PX3rwc2Th7ibaUgmro"
       },
       "updateUser": {
-        "handler": "src/handlers/user_handler.update_user",
+        "handler": "src/user_handler.update_user",
         "events": [
           {
             "http": {
@@ -3286,10 +3514,10 @@
         "timeout": 68,
         "runtime": "python3.12",
         "vpc": {},
-        "versionLogicalId": "UpdateUserLambdaVersion1y9rxz3Ew6bx9vEATZ6Gaxxpm8QZb8LYaMPhkiWpI8"
+        "versionLogicalId": "UpdateUserLambdaVersionmWGVVZNmhnI2AQcYmhd8bKDcG4QOy67cXeuMMEC8o"
       },
       "getUser": {
-        "handler": "src/handlers/user_handler.get_user",
+        "handler": "src/user_handler.get_user",
         "events": [
           {
             "http": {
@@ -3333,10 +3561,46 @@
         "timeout": 68,
         "runtime": "python3.12",
         "vpc": {},
-        "versionLogicalId": "GetUserLambdaVersionFFIZHY8gNyPLXuJ7T5EDUAWxJazxBNR4wVkNObVXsb0"
+        "versionLogicalId": "GetUserLambdaVersiontZD1DdHTbLJvpDYSDyYS1NPnadpDnqaMAF6OzbLJ7IQ"
+      },
+      "debugEnvironment": {
+        "handler": "src/handlers/debug_handler.debug_environment",
+        "events": [
+          {
+            "http": {
+              "path": "debug/environment",
+              "method": "get",
+              "cors": {
+                "methods": [
+                  "OPTIONS",
+                  "GET"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token"
+                ],
+                "allowCredentials": false,
+                "origins": [
+                  "*"
+                ]
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "bodybuildr-backend-infrastructure-dev-debugEnvironment",
+        "package": {},
+        "memory": 256,
+        "timeout": 68,
+        "runtime": "python3.12",
+        "vpc": {},
+        "versionLogicalId": "DebugEnvironmentLambdaVersion7mGetAyqhLMlN0vF2qRkoCTXoAcD2RdtNJT5D7O8k"
       },
       "updateProgress": {
-        "handler": "src/handlers/progress_handler.update_progress",
+        "handler": "src/progress_handler.update_progress",
         "events": [
           {
             "http": {
@@ -3380,10 +3644,10 @@
         "timeout": 68,
         "runtime": "python3.12",
         "vpc": {},
-        "versionLogicalId": "UpdateProgressLambdaVersionNFmHx4HubxEa8jItjj5K8q2vd7NPNlXEP64befYFY8"
+        "versionLogicalId": "UpdateProgressLambdaVersionATDTr3uf4tax3v5Pbxlez7uevjyxT52f1A5BJymw8k"
       },
       "getProgress": {
-        "handler": "src/handlers/progress_handler.get_progress",
+        "handler": "src/progress_handler.get_progress",
         "events": [
           {
             "http": {
@@ -3427,10 +3691,10 @@
         "timeout": 68,
         "runtime": "python3.12",
         "vpc": {},
-        "versionLogicalId": "GetProgressLambdaVersionaakrYGDD4zHgZEyofGdEqUphtCymlxURPyPdLqy3b0"
+        "versionLogicalId": "GetProgressLambdaVersionIBIeTMiexiEzTi05Gz4qEErCZBMPoRNJWVxdZbUcmI"
       },
       "getPlanVersions": {
-        "handler": "src/handlers/plan_handler.get_plan_versions",
+        "handler": "src/plan_handler.get_plan_versions_handler",
         "events": [
           {
             "http": {
@@ -3474,10 +3738,10 @@
         "timeout": 68,
         "runtime": "python3.12",
         "vpc": {},
-        "versionLogicalId": "GetPlanVersionsLambdaVersionVZhKGIz1wUJMbJzuGwRs488QV43ZVf7siSt001ch0w"
+        "versionLogicalId": "GetPlanVersionsLambdaVersionzgbr6tXybd7e2mpxG1A1FwuEFoTF78elbJdJZIBA4g"
       },
       "chatWithCoach": {
-        "handler": "src/handlers/chat_handler.chat_with_coach",
+        "handler": "src/chat_handler.chat_with_coach",
         "timeout": 65,
         "events": [
           {
@@ -3521,10 +3785,10 @@
         "memory": 256,
         "runtime": "python3.12",
         "vpc": {},
-        "versionLogicalId": "ChatWithCoachLambdaVersionDGMwadJ09DCS0yBFx5TXGjfNL3xk8TnYXpXmY0UWVg"
+        "versionLogicalId": "ChatWithCoachLambdaVersion4maJrgPinvpTHHikKIsWw7EFd0YovZ6lrdTqqNWpOk"
       },
       "getChatHistory": {
-        "handler": "src/handlers/chat_handler.get_chat_history",
+        "handler": "src/chat_handler.get_chat_history",
         "events": [
           {
             "http": {
@@ -3568,7 +3832,7 @@
         "timeout": 68,
         "runtime": "python3.12",
         "vpc": {},
-        "versionLogicalId": "GetChatHistoryLambdaVersion0lYOY9MdJWi9eeuvDvqnxTp7PegbiuK15q41G4Z8kw"
+        "versionLogicalId": "GetChatHistoryLambdaVersion8L2RjTjx5emWzx49pTMLA8xfuZ90DcOfjZzL915ebng"
       }
     },
     "resources": {
@@ -3792,7 +4056,7 @@
     "artifact": "C:\\coach_genai\\bodybuilding_serverless_api\\.serverless\\bodybuildr-backend-infrastructure.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/bodybuildr-backend-infrastructure/dev/1742061194696-2025-03-15T17:53:14.696Z",
+    "artifactDirectoryName": "serverless/bodybuildr-backend-infrastructure/dev/1742091591609-2025-03-16T02:19:51.609Z",
     "artifact": "bodybuildr-backend-infrastructure.zip"
   }
 }

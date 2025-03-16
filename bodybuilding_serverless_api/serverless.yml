@@ -93,7 +93,7 @@ functions:
 
   # Workout Plan Management
   createPlan:
-    handler: src/handlers/plan_handler.create_plan
+    handler: src/plan_handler.create_plan_handler
     timeout: 65
     events:
       - http:
@@ -103,7 +103,7 @@ functions:
           authorizer: ${file(api-config.json):authorizer}
 
   savePlan:
-    handler: src/handlers/plan_handler.save_plan
+    handler: src/plan_handler.save_plan_handler
     events:
       - http:
           path: /plans/save
@@ -112,7 +112,7 @@ functions:
           authorizer: ${file(api-config.json):authorizer}
 
   listPlans:
-    handler: src/handlers/plan_handler.list_plans
+    handler: src/plan_handler.list_plans_handler
     events:
       - http:
           path: /plans/list
@@ -122,7 +122,7 @@ functions:
 
   # User Profile Management
   createUser:
-    handler: src/handlers/user_handler.create_user
+    handler: src/user_handler.create_user
     events:
       - http:
           path: /users/create
@@ -131,7 +131,7 @@ functions:
           authorizer: ${file(api-config.json):authorizer}
 
   updateUser:
-    handler: src/handlers/user_handler.update_user
+    handler: src/user_handler.update_user
     events:
       - http:
           path: /users/{userId}
@@ -140,7 +140,7 @@ functions:
           authorizer: ${file(api-config.json):authorizer}
 
   getUser:
-    handler: src/handlers/user_handler.get_user
+    handler: src/user_handler.get_user
     events:
       - http:
           path: /users/{userId}
@@ -148,9 +148,19 @@ functions:
           cors: ${file(api-config.json):cors}
           authorizer: ${file(api-config.json):authorizer}
 
+  # Debug Function
+  debugEnvironment:
+    handler: src/handlers/debug_handler.debug_environment
+    events:
+      - http:
+          path: /debug/environment
+          method: get
+          cors: ${file(api-config.json):cors}
+          # No authorizer for easier debugging
+
   # Progress Tracking
   updateProgress:
-    handler: src/handlers/progress_handler.update_progress
+    handler: src/progress_handler.update_progress
     events:
       - http:
           path: /progress/{userId}
@@ -159,7 +169,7 @@ functions:
           authorizer: ${file(api-config.json):authorizer}
 
   getProgress:
-    handler: src/handlers/progress_handler.get_progress
+    handler: src/progress_handler.get_progress
     events:
       - http:
           path: /progress/{userId}
@@ -169,7 +179,7 @@ functions:
 
   # Plan Versioning and Chat
   getPlanVersions:
-    handler: src/handlers/plan_handler.get_plan_versions
+    handler: src/plan_handler.get_plan_versions_handler
     events:
       - http:
           path: /plans/versions/{planId}
@@ -178,7 +188,7 @@ functions:
           authorizer: ${file(api-config.json):authorizer}
 
   chatWithCoach:
-    handler: src/handlers/chat_handler.chat_with_coach
+    handler: src/chat_handler.chat_with_coach
     timeout: 65
     events:
       - http:
@@ -188,7 +198,7 @@ functions:
           authorizer: ${file(api-config.json):authorizer}
 
   getChatHistory:
-    handler: src/handlers/chat_handler.get_chat_history
+    handler: src/chat_handler.get_chat_history
     events:
       - http:
           path: /plans/{planId}/chat-history

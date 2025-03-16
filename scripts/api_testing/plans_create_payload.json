@@ -1,0 +1,11 @@
+﻿{
+  "goals": ["muscle gain", "strength improvement"],
+  "experience_level": "intermediate",
+  "available_days": ["Monday", "Tuesday", "Thursday", "Friday", "Saturday"],
+  "preferences": {
+    "workout_duration": 60,
+    "focus_areas": ["chest", "back"],
+    "preferred_exercises": ["bench press", "deadlift", "squats"]
+  },
+  "limitations": ["shoulder injury", "knee pain"]
+}
